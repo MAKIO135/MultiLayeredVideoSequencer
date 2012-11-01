@@ -87,6 +87,7 @@ class Clip{
 				ClipFilter.setParameterValue("posXY", new float[] {posX, posY});
 				ClipFilter.setParameterValue("Scale", Scale);
 				if(TargetOpacity-Opacity>.1) Opacity += fadeInAlphaStep;
+				else Opacity = TargetOpacity;
 				ClipFilter.setParameterValue("Opacity", Opacity);
 				tex.filter(ClipFilter, texFiltered);
 				if(isEditClip){
