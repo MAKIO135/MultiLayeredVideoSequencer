@@ -14,7 +14,7 @@ data\thumbnails.txt
 *.swp
 *.mov
 *.png
-#*.data
+*.data
 *~.nib
 local.properties
 .classpath
