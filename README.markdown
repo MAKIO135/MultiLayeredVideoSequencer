@@ -46,9 +46,11 @@ This allows you to edit Clip settings like:
 <br>
 <br>
 <h2>Part 2: VideoLayers</h2>
+Part 2 will be released as soon as Part 1 will be fixed.
 <br>
 <br>
 <h2>Part 3: Composition</h2>
+Part 3 will be released as soon as Part 2 will be fixed.
 <br>
 <br>
 Videos used in the exemple are from <a href="http://www.beeple-crap.com/vjclips.php">Beeple</a>
