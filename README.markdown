@@ -49,3 +49,6 @@ This allows you to edit Clip settings like:
 <br>
 <br>
 <h2>Part 3: Composition</h2>
+<br>
+<br>
+Videos used in the exemple are from <a href="http://www.beeple-crap.com/vjclips.php">Beeple</a>
