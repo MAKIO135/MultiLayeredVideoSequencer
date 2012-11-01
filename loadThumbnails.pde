@@ -1,7 +1,7 @@
 PImage[] thumbnails;
 void checkThumbnails(){
 	loadThumbnails();
-	String[] thumbs=loadStrings("data/thumbnails.data");
+	String[] thumbs=loadStrings("data/thumbnails.dat");
 	thumbnails = new PImage[Playlist.length];
 	for (int i = 0; i<Playlist.length; i++){
 		if(!(Playlist[i].substring(0, Playlist[i].length()-4)).equals(thumbs[i].substring(0, thumbs[i].length()-4))){
@@ -36,5 +36,5 @@ void loadThumbnails(){
 			filenames[i]=".png";
 		}
 	}
-	saveStrings("data/thumbnails.data", filenames);
+	saveStrings("data/thumbnails.dat", filenames);
 }
