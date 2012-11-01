@@ -1,5 +1,5 @@
 <h1>Multi Layered Video Sequencer</h1>
-Made with Processing, GSVideo, GLGraphics and ControlP5.<br />
+Made with Processing 1.5.1, GSVideo 1.0.0, GLGraphics 1.0.0 and ControlP5 0.7.6<br />
 This project is under developpement.<br />
 <br />
 ![Alt Video Sequencer](http://makio.free.fr/divers/Github/VideoSequencer.jpg)
