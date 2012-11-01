@@ -6,7 +6,7 @@ void loadVideos(){
 	String[] filenames = listFileNames(path);
 	// println(filenames);
 	
-	saveStrings("data/playlist.txt", filenames);
+	saveStrings("data/playlist.data", filenames);
 }
 
 // This function returns all the files in a directory as an array of Strings

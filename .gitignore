@@ -7,15 +7,19 @@
 .metadata
 bin/
 tmp/
+data\playlist.txt
+data\thumbnails.txt
 *.tmp
 *.bak
 *.swp
+*.mov
+*.png
+#*.data
 *~.nib
 local.properties
 .classpath
 .settings/
 .loadpath
-data/
 
 # External tool builders
 .externalToolBuilders/
