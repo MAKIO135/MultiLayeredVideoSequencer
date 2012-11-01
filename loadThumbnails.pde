@@ -9,9 +9,6 @@ void checkThumbnails(){
 			GSMovie tmp=new GSMovie(this,"videos/"+Playlist[i]);
 			tmp.play();
 			while(tmp.width<10){
-				if (tmp.available()) {
-					tmp.read();
-				}
 			}
 			tmp.jump(tmp.duration()/2);
 			tmp.pause();
