@@ -17,6 +17,7 @@ void checkThumbnails(){
 			tmp.pause();
 			tmp.resize(128,72);
 			tmp.save("data/thumbnails/"+Playlist[i].substring(0, Playlist[i].length()-4)+".png");
+			tmp.stop();
 			tmp.delete();
 		}
 		thumbnails[i]=loadImage("data/thumbnails/"+Playlist[i].substring(0, Playlist[i].length()-4)+".png");
