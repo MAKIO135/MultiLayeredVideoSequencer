@@ -1,10 +1,1 @@
-blockpile (one).png
-blockpile (two).png
-danny tannigle.png
-gloablee.png
-hexgrow.png
-midflow.png
-sphere.deamon.png
-tiestrapstream.png
-tubecam (one).png
-tubecam (two).png
+.png
