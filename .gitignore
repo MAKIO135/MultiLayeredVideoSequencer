@@ -7,14 +7,12 @@
 .metadata
 bin/
 tmp/
-data\playlist.txt
-data\thumbnails.txt
 *.tmp
 *.bak
 *.swp
 *.mov
 *.png
-*.data
+*.dat
 *~.nib
 local.properties
 .classpath
