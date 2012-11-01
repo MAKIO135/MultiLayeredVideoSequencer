@@ -18,7 +18,7 @@ void setup(){
 
 	// load videos and check if you need to load or create thumbnails
 	loadVideos();
-	Playlist = loadStrings("data/playlist.dat");
+	Playlist = loadStrings("data/playlist.txt");
 	checkThumbnails();
 
 	// create a Clip for edition
