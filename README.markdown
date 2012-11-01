@@ -41,6 +41,7 @@ Made with:<br>
 	<ul>- Timeline: Not updating correctly<br>
 	- Opacity: modfying opacity slider have the clip disappear<br>
 	- readPosition: Define current position of the reading on totalDuration (duration*nbRepeat) of the clip<br>
+	- fadeOut: add fadeOut (readPosition has to be done first)<br>
 	- Play mode: Sometimes loop when it should playback<br>
 	- Gstreamer: Crashing randomly</ul>
 </li>
