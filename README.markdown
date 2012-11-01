@@ -7,12 +7,13 @@ Made with:<br>
 	ControlP5 1.5.2: <a href="http://code.google.com/p/controlp5/downloads/list">http://code.google.com/p/controlp5/downloads/list</a></ul>
 </li>
 
+<p>Videos used in the demo are from <a href="http://www.beeple-crap.com/vjclips.php">Beeple</a></p>
+
 <h3>This project is under developpement.<br>Help welcome.</h3>
-![Alt Video Sequencer](http://makio.free.fr/divers/Github/VideoSequencer.jpg)
+<img src="http://makio.free.fr/divers/Github/VideoSequencer.jpg">
 <br>
-First, add your videos inside /data/videos folder. It will automatically create playlist and check if thumbnails exist or need to be created.<br>
-<br>
-The Sequencer works in 3 steps/parts: 
+<p>First, add your videos inside /data/videos folder. It will automatically create playlist and check if thumbnails exist or need to be created.</p>
+<p>The Sequencer works in 3 steps/parts:</p>
 <li>
 	<ul>- Clips: choose a video, modify its settings and add the created clip to a chosen Layer.<br>
 	- Layers: a succession of clips playing one after another, you can modify each layer settings and choose a delay before playing Layer.<br>
@@ -21,8 +22,8 @@ The Sequencer works in 3 steps/parts:
 <h4>Due to some bug on the first part, only the first part is released at this time.</h4>
 <br>
 <h2>Part 1: Clip Editor</h2>
-![Alt Video Sequencer Part 1](http://makio.free.fr/divers/Github/VideoSequencerPart1.png)<br>
-This allows you to edit Clip settings like:
+<img src="http://makio.free.fr/divers/Github/VideoSequencerPart1.png" alt="Video Sequencer Part 1"><br>
+<p>This allows you to edit Clip settings like:</p>
 <li>
 	<ul>- play mode: loop or play-playback<br>
 	- number of repetition (loop 1 = play once, you need 2 for play-playback)<br>
@@ -38,6 +39,7 @@ This allows you to edit Clip settings like:
 <h3>Needing fixes:</h3>
 <li>
 	<ul>- Timeline: Not updating correctly<br>
+	- Opacity: modfying opacity slider have the clip disappear<br>
 	- readPosition: Define current position of the reading on totalDuration (duration*nbRepeat) of the clip<br>
 	- Play mode: Sometimes loop when it should playback<br>
 	- Gstreamer: Crashing randomly</ul>
@@ -46,11 +48,10 @@ This allows you to edit Clip settings like:
 <br>
 <br>
 <h2>Part 2: VideoLayers</h2>
-Part 2 will be released as soon as Part 1 will be fixed.
+<p>Part 2 will be released as soon as Part 1 will be fixed.</p>
 <br>
 <br>
 <h2>Part 3: Composition</h2>
-Part 3 will be released as soon as Part 2 will be fixed.
+<p>Part 3 will be released as soon as Part 2 will be fixed.</p>
 <br>
 <br>
-Videos used in the exemple are from <a href="http://www.beeple-crap.com/vjclips.php">Beeple</a>
