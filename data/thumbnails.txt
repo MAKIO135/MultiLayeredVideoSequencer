@@ -1,1 +1,1 @@
-.png
+station.png

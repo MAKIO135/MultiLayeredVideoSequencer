@@ -15,9 +15,7 @@ local.properties
 .classpath
 .settings/
 .loadpath
-*.mov
-*.png
-*.txt
+data/
 
 # External tool builders
 .externalToolBuilders/
