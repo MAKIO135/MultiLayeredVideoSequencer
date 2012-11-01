@@ -33,8 +33,6 @@ class Clip{
 
 	Clip(PApplet applet){
 		parent = applet;
-		tex = new GLTexture(parent);
-		texFiltered = new GLTexture(parent);
 		ClipFilter = new GLTextureFilter(parent, "ClipFilter.xml");
 	}
 
@@ -44,11 +42,15 @@ class Clip{
 		if(movie != null){
 			movie.stop();
 			movie.delete();
+			tex.delete();
+			texFiltered.delete();
 			println("Movie deleted");
 		}
 
 		// load movie and set Texture
 		movie = new GSMovie(parent,"videos/"+Playlist[movieNum]);
+		tex = new GLTexture(parent);
+		texFiltered = new GLTexture(parent);
 		movie.setPixelDest(tex);
 		tex.setPixelBufferSize(10);
 		tex.delPixelsWhenBufferFull(false);
@@ -64,8 +66,8 @@ class Clip{
 			Opacity = fadeInAlpha;
 			fadeInAlphaStep = (TargetOpacity - fadeInAlpha)/(fadeInDuration*movie.getSourceFrameRate());
 			fadeOutAlphaStep = (TargetOpacity - fadeOutAlpha)/(fadeOutDuration*movie.getSourceFrameRate());
-			println(fadeInAlphaStep);
-			println(fadeOutAlphaStep);
+			// println(fadeInAlphaStep);
+			// println(fadeOutAlphaStep);
 			Clip_Timeline.setValue(0);
 			movie.goToBeginning();
 		}
@@ -84,7 +86,7 @@ class Clip{
 				// apply GLSL Filter		
 				ClipFilter.setParameterValue("posXY", new float[] {posX, posY});
 				ClipFilter.setParameterValue("Scale", Scale);
-				if(abs(TargetOpacity-Opacity)>.1 ) Opacity += fadeInAlphaStep;
+				if(TargetOpacity-Opacity>.1) Opacity += fadeInAlphaStep;
 				ClipFilter.setParameterValue("Opacity", Opacity);
 				tex.filter(ClipFilter, texFiltered);
 				if(isEditClip){
@@ -95,10 +97,11 @@ class Clip{
 			}
 
 			// check loop/playback/stop
-			if(movie.time()<1){
+			
+			if(movie.time()<=.1){
 				movie.speed(movieSpeed);
 			}
-			else if(movie.duration()-movie.time()<1){
+			else if(movie.duration()-movie.time()<=.1){
 				if(lectureMode==0){
 					nbLecture++;
 					if(nbLecture<nbRepeat || isEditClip){

@@ -12,7 +12,6 @@ Slider Clip_fadeOutAlpha;
 Slider Clip_fadeOutDuration;
 Slider Clip_Opacity;
 DropdownList Clip_Effect;
-// Range[] Clip_EffectRange = new Range[5];
 DropdownList Add_to_Layer;
 int addTo=0;
 
@@ -262,7 +261,7 @@ void Clip_Speed(float f){
 	editClip.movieSpeed = f;
 	if (editClip.movie!=null){
 		editClip.movie.goToBeginning();
-		editClip.movie.speed(editClip.movieSpeed);
+		editClip.movie.speed(f);
 		editClip.movie.play();
 	}
 	// println("setSpeed: "+editClip.movieSpeed);
