@@ -12,7 +12,7 @@ tmp/
 *.swp
 *.mov
 *.png
-*.dat
+#*.dat
 *~.nib
 local.properties
 .classpath
