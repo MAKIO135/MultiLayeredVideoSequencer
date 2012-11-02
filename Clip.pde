@@ -3,15 +3,16 @@ class Clip{
 
 	boolean isEditClip = false;
 	boolean isLoaded = false;// clip is loaded
-	boolean ended = false;// clip finished reading
+	boolean ended = false;// clip ended
 
 	int movieNum=999;
 	GSMovie movie;
 	float duration;// duration of the movie
 	float readPosition;// time of the reading on totalDuration
-	int lectureMode=0;// play/
+	int lectureMode=0;// 0:loop - 1:play/playback
 	int nbRepeat=1;// number of repetition
-	int nbLecture=0;// current number of reads
+	boolean addLectureSwitch=false;// utility boolean to count nbLecture
+	int nbLecture=1;// current number of reads
 	float totalDuration;// duration of the movie multiplied by number of repetition
 
 	float movieSpeed=1.0;
@@ -65,8 +66,8 @@ class Clip{
 			// calculs for fadeIn & fadeOut
 			Opacity = fadeInAlpha;
 			fadeInAlphaStep = (TargetOpacity - fadeInAlpha)/(fadeInDuration*movie.getSourceFrameRate());
-			fadeOutAlphaStep = (TargetOpacity - fadeOutAlpha)/(fadeOutDuration*movie.getSourceFrameRate());
 			// println(fadeInAlphaStep);
+			fadeOutAlphaStep = (TargetOpacity - fadeOutAlpha)/(fadeOutDuration*movie.getSourceFrameRate());
 			// println(fadeOutAlphaStep);
 			Clip_Timeline.setValue(0);
 			movie.goToBeginning();
@@ -82,42 +83,70 @@ class Clip{
 
 	void display(int x, int y, int w, int h){
 		if(movie.ready()){
-			if (tex.putPixelsIntoTexture()) {	
+			if (tex.putPixelsIntoTexture()) {
+				updateGLSLParams();
 				// apply GLSL Filter		
-				ClipFilter.setParameterValue("posXY", new float[] {posX, posY});
-				ClipFilter.setParameterValue("Scale", Scale);
-				if(TargetOpacity-Opacity>.1) Opacity += fadeInAlphaStep;
-				else Opacity = TargetOpacity;
-				ClipFilter.setParameterValue("Opacity", Opacity);
 				tex.filter(ClipFilter, texFiltered);
+
+				// display editClip
 				if(isEditClip){
+					// due to alpha, we need to "erase" previous frame
 					fill(20);
 					rect(x,y,w,h);
+
 					image(texFiltered,x,y,w,h);
 				}
 			}
 
 			// check loop/playback/stop
-			
-			if(movie.time()<=.1){
+			if(movie.frame()<=2*max(1,movieSpeed)){
 				movie.speed(movieSpeed);
-			}
-			else if(movie.duration()-movie.time()<=.1){
-				if(lectureMode==0){
+				if(addLectureSwitch){
 					nbLecture++;
+					// println(nbLecture);
+					addLectureSwitch=false;
+				}
+			}
+			else if(movie.length()-movie.frame()<=2*max(1,movieSpeed)){
+				// lectureMode: loop
+				if(lectureMode==0){
 					if(nbLecture<nbRepeat || isEditClip){
-						movie.jump(0);
+						movie.goToBeginning();
+						nbLecture++;
+						// println(nbLecture);
 					}
 					else{
 						ended = true;
 						movie.stop();
 					}
 				}
+
+				// lectureMode: play/playback
 				else if(lectureMode==1) {
-					movie.speed(-movieSpeed);
+					if(nbLecture<nbRepeat || isEditClip){
+						if(!addLectureSwitch){
+							nbLecture++;
+							// println(nbLecture);
+							addLectureSwitch=true;
+						}
+						movie.speed(-movieSpeed);
+					}
+					else{
+						ended = true;
+						movie.stop();
+					}
 				}
-			}
+			}// end check loop/playback/stop
 		}
+	}
+	
+	void updateGLSLParams(){
+		ClipFilter.setParameterValue("posXY", new float[] {posX, posY});
+		ClipFilter.setParameterValue("Scale", Scale);
+		if(nbLecture==1 && TargetOpacity-Opacity>.1 && movie.time()<fadeInDuration) Opacity += fadeInAlphaStep;
+		else if(nbLecture==nbRepeat && movie.duration()-movie.time()<fadeOutDuration) Opacity -= fadeOutAlphaStep;// depends on playMode
+		else Opacity = TargetOpacity;
+		ClipFilter.setParameterValue("Opacity", Opacity);
 	}
 
 	void updateClipGui(){

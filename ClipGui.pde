@@ -234,7 +234,7 @@ void initClipGui() {
 }
 
 void Clip_Timeline(float f){
-	if(editClip.movie!=null){
+/*	if(editClip.movie!=null){
 		float t = f;
 		if (0.1 < abs(t - editClip.movie.time())) {
 			boolean b = editClip.movie.isPlaying();
@@ -242,7 +242,7 @@ void Clip_Timeline(float f){
 			editClip.movie.jump(t);
 			if (!b) editClip.movie.pause();
 		}
-	}
+	}*/
 }
 
 void Clip_PlayPause(boolean b){

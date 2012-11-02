@@ -33,12 +33,10 @@ void controlEvent(ControlEvent event){
 		else if((event.getController().getName().substring(0,4)).equals("Clip")){
 			for(int i=0; i<Playlist.length; i++){
 				if((event.getController().getName()).equals("Clip"+i)){
-					if(editClip.movieNum!=i){
-						gui.getGroup("clipList").close();
-						editClip.movieNum=i;
-						editClip.isLoaded=false;
-						editClip.setVideo();
-					}
+					gui.getGroup("clipList").close();
+					editClip.movieNum=i;
+					editClip.isLoaded=false;
+					editClip.setVideo();
 				}
 			}
 		}
