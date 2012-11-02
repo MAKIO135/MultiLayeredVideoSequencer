@@ -19,7 +19,6 @@ Made with:<br>
 	- Layers: a succession of clips playing one after another, you can modify each layer settings and choose a delay before playing Layer.<br>
 	- Composition: all the Layers playing at the same time (after their launch delay is met) with the blendMode chosen for the current clip of each Layer.</ul>
 </li>
-<h4>Due to some issues, only the first part is released at this time.</h4>
 <br>
 <h2>Part 1: Clip Editor</h2>
 <img src="http://makio.free.fr/divers/Github/VideoSequencerPart1.png" alt="Video Sequencer Part 1"><br>
@@ -37,16 +36,19 @@ Made with:<br>
 </li>
 <h3>Needing fixes:</h3>
 <li>
-	<ul>- Video reezing randomly whitout error message: GLGraphics, GSVideo or GStreamer ??<br>
+	<ul>- Video freezing randomly whitout error message: GLGraphics, GSVideo or GStreamer ??<br>
 	- Timeline: Not updating correctly<br>
 	- Opacity: modfying opacity slider have the clip disappear <b>FIXED</b><br>
 	- fadeOut: add fadeOut (readPosition has to be done first) <b>FIXED</b><br>
 	- Play mode: Sometimes loop when it should playback <b>FIXED</b></ul>
 </li>
 <h3>GStreamer issue</h3>
-<p><b>** (java.exe:6352): WARNING **: gstvideo: failed to get framerate property of pad playsink0:audio_raw_sink<br>
-(java.exe:6352): GStreamer-CRITICAL **: gst_value_get_fraction_numerator: assertion `GST_VALUE_HOLDS_FRACTION (value)' failed</b><br>
-Depends on videos and have them restart.</p>
+<p>
+	<b>** (java.exe:6352): WARNING **: gstvideo: failed to get framerate property of pad playsink0:audio_raw_sink<br>
+	(java.exe:6352): GStreamer-CRITICAL **: gst_value_get_fraction_numerator: assertion `GST_VALUE_HOLDS_FRACTION (value)' failed</b><br>
+	Happens when using movie.frame().<br>
+	Depends on videos and have them restart.
+</p>
 <br>
 <br>
 <h2>Part 2: VideoLayers</h2>
@@ -57,6 +59,7 @@ The Layer Editor allows you to edit each Layer settings like:</p>
 	<ul>- position XY<br>
 	- scale<br>
 	- opacity<br>
+	- custom fade in and fade out<br>
 	- delay before playing first clip of the Layer</ul>
 </li>
 <h3>Needing fixes:</h3>
@@ -65,12 +68,12 @@ The Layer Editor allows you to edit each Layer settings like:</p>
 	- have clips play one after the other<br>
 	- Layer Timeline<br>
 	- when adding clip to Layer add button of clip in layers Gui<br>
-	- re-editing a Clip<br>
-	- </ul>
+	- method for re-editing Clip + method to update Clip</ul>
 </li>
 <br>
 <br>
 <h2>Part 3: Composition</h2>
-<p>Part 3 will be released as soon as Part 2 will be fixed.</p>
+<img src="http://makio.free.fr/divers/Github/VideoSequencerPart3.png" alt="Video Sequencer Part 3"><br>
+<p></p>
 <br>
 <br>
