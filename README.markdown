@@ -4,7 +4,8 @@ Made with:<br>
 	<ul>Processing 1.5.1: <a href="http://processing.org/download/">http://processing.org/download/</a><br>
 	GSVideo 1.0.0: <a href="http://sourceforge.net/projects/gsvideo/files/gsvideo/1.0/">http://sourceforge.net/projects/gsvideo/files/gsvideo/1.0/</a><br>
 	GLGraphics 1.0.0: <a href="http://sourceforge.net/projects/glgraphics/files/glgraphics/1.0/">http://sourceforge.net/projects/glgraphics/files/glgraphics/1.0/</a><br>
-	ControlP5 1.5.2: <a href="http://code.google.com/p/controlp5/downloads/list">http://code.google.com/p/controlp5/downloads/list</a></ul>
+	ControlP5 1.5.2: <a href="http://code.google.com/p/controlp5/downloads/list">http://code.google.com/p/controlp5/downloads/list</a><br>
+	JSON4Processing 1.3.1: <a href="https://github.com/MAKIO135/JSON-processing">https://github.com/MAKIO135/JSON-processing</a></ul>
 </li>
 
 <p>Videos used in the demo are from <a href="http://www.beeple-crap.com/vjclips.php">Beeple</a></p>
@@ -58,6 +59,10 @@ The Layer Editor allows you to edit each Layer settings like:</p>
 	- opacity<br>
 	- custom fade in and fade out<br>
 	- delay before playing first clip of the Layer</ul>
+</li>
+<h3>Needing fixes:</h3>
+<li>
+	<ul>- LayerFilter GLSL does not multiply Opacity from clip</ul>
 </li>
 <h3>Needs:</h3>
 <li>
