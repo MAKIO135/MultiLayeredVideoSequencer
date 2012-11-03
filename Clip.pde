@@ -84,7 +84,7 @@ class Clip{
 		if(isLoaded && movie.ready()){
 			if (tex.putPixelsIntoTexture()) {
 				updateGLSLParams();
-				// apply GLSL Filter		
+				// apply GLSL Filter
 				tex.filter(ClipFilter, texFiltered);
 
 				// display editClip
@@ -117,7 +117,8 @@ class Clip{
 					}
 					else{
 						ended = true;
-						movie.stop();
+						movie.goToBeginning();
+						movie.pause();
 					}
 				}
 
@@ -133,7 +134,8 @@ class Clip{
 					}
 					else{
 						ended = true;
-						movie.stop();
+						movie.goToBeginning();
+						movie.pause();
 					}
 				}
 			}// end check loop/playback/stop

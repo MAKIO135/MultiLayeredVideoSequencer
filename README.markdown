@@ -36,14 +36,14 @@ Made with:<br>
 </li>
 <h3>Needing fixes:</h3>
 <li>
-	<ul>- Video freezing randomly whitout error message: GLGraphics, GSVideo or GStreamer ??<br>
+	<ul>- Some videos are freezing randomly whitout error message: codecs? GLGraphics, GSVideo or GStreamer ??<br>
 	- ControlP5 Timeline: Sometimes not updating correctly<br></ul>
 </li>
 <h3>GStreamer issue</h3>
 <p>
 	<b>** (java.exe:6352): WARNING **: gstvideo: failed to get framerate property of pad playsink0:audio_raw_sink<br>
 	(java.exe:6352): GStreamer-CRITICAL **: gst_value_get_fraction_numerator: assertion `GST_VALUE_HOLDS_FRACTION (value)' failed</b><br>
-	Happens when using movie.frame().<br>
+	Happens when using movie.frame() continuously.<br>
 	Depends on videos and have them restart.
 </p>
 <br>
@@ -59,10 +59,10 @@ The Layer Editor allows you to edit each Layer settings like:</p>
 	- custom fade in and fade out<br>
 	- delay before playing first clip of the Layer</ul>
 </li>
-<h3>Needing fixes:</h3>
+<h3>Needs:</h3>
 <li>
-	<ul>- Layer Timeline<br>
-	- when adding clip to Layer add button of clip in layers Gui<br>
+	<ul>- when adding clip to Layer add button of clip in layers Gui<br>
+	- Layer Timeline<br>
 	- method for re-editing Clip + method to update Clip</ul>
 </li>
 <br>
@@ -70,5 +70,11 @@ The Layer Editor allows you to edit each Layer settings like:</p>
 <h2>Part 3: Composition</h2>
 <img src="http://makio.free.fr/divers/Github/VideoSequencerPart3.png" alt="Video Sequencer Part 3"><br>
 <p></p>
+<h3>Needs:</h3>
+<li>
+	<ul>- Composition Timeline<br>
+	- Save method with JSON<br>
+	- Load method</ul>
+</li>
 <br>
 <br>
