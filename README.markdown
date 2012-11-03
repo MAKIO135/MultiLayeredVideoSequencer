@@ -77,7 +77,8 @@ The Layer Editor allows you to edit each Layer settings like:</p>
 <p></p>
 <h3>Needs:</h3>
 <li>
-	<ul>- Composition Timeline<br>
+	<ul>- Layers display with blend modes<br>
+	- Composition Timeline<br>
 	- Save method with JSON<br>
 	- Load method</ul>
 </li>
