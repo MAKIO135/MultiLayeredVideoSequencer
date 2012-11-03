@@ -37,7 +37,7 @@ Made with:<br>
 <h3>Needing fixes:</h3>
 <li>
 	<ul>- Video freezing randomly whitout error message: GLGraphics, GSVideo or GStreamer ??<br>
-	- Timeline: Not updating correctly<br>
+	- ControlP5 Timeline: Sometimes not updating correctly<br>
 	- Opacity: modfying opacity slider have the clip disappear <b>FIXED</b><br>
 	- fadeOut: add fadeOut (readPosition has to be done first) <b>FIXED</b><br>
 	- Play mode: Sometimes loop when it should playback <b>FIXED</b></ul>

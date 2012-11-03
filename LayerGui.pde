@@ -48,104 +48,114 @@ void initLayerGui(){
 				.setBackgroundHeight(370)
 				;
 
-			Layer_Timeline[n] = gui.addSlider("Layer"+n+"_Timeline")
+			Layer_Timeline[n] = gui.addSlider("Layer_Timeline"+n)
 				.setPosition(10,10)
 				.setSize(470,10)
 				.setRange(0,1)
+				.setId(0)
 				.moveTo(layerG[n])
 				;
 				Layer_Timeline[n].getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
 
-			Layer_Duration[n] = gui.addTextlabel("Layer"+n+"_Duration")
+			Layer_Duration[n] = gui.addTextlabel("Layer_Duration"+n)
 				.setText("DURATION: 0.00")
 				.setPosition(380,23)
 				.moveTo(layerG[n])
+				.setId(1)
 				;
 
-			gui.addToggle("Layer"+n+"_PlayPause")
+			gui.addToggle("Layer_PlayPause"+n)
 				.setPosition(10,40)
 				.setSize(80,10)
 				.moveTo(layerG[n])
+				.setId(2)
 				;
 
-
-			Layer_XY[n] = gui.addSlider2D("Layer"+n+"_XY")
+			Layer_XY[n] = gui.addSlider2D("Layer_XY"+n)
 				.setPosition(10,130)
 				.setSize(260,140)
-				.setMinX(-130)
-				.setMaxX(130)
-				.setMinY(-70)
-				.setMaxY(70)
-				.setArrayValue(new float[] {130,70})
+				.setMinX(-100)
+				.setMaxX(100)
+				.setMinY(-100)
+				.setMaxY(100)
+				.setArrayValue(new float[] {100,100})
+				.setId(3)
 				.moveTo(layerG[n])
 				;
 
-			Layer_Scale[n] = gui.addSlider("Layer"+n+"_Scale")
+			Layer_Scale[n] = gui.addSlider("Layer_Scale"+n)
 				.setPosition(295,130)
 				.setSize(185,10)
 				.setMin(0.1)
 				.setMax(10)
 				.setValue(1)
+				.setId(4)
 				.moveTo(layerG[n])
 				;
 				Layer_Scale[n].getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
 
-			Layer_Opacity[n] = gui.addSlider("Layer"+n+"_Opacity")
+			Layer_Opacity[n] = gui.addSlider("Layer_Opacity"+n)
 				.setPosition(295,180)
 				.setSize(185,10)
 				.setMin(0.0)
 				.setMax(1.0)
 				.setValue(1.0)
+				.setId(5)
 				.moveTo(layerG[n])
 				;
 				Layer_Opacity[n].getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
 
-			Layer_Delay[n] = gui.addSlider("Layer"+n+"_Delay")
+			Layer_Delay[n] = gui.addSlider("Layer_Delay"+n)
 				.setPosition(295,220)
 				.setSize(185,10)
 				.setMin(0.0)
 				.setMax(360.0)
 				.setValue(0.0)
+				.setId(6)
 				.moveTo(layerG[n])
 				;
 				Layer_Delay[n].getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
 
-			Layer_fadeInAlpha[n] = gui.addSlider("Layer"+n+"_fadeInAlpha")
+			Layer_fadeInAlpha[n] = gui.addSlider("Layer_fadeInAlpha"+n)
 				.setPosition(10,300)
 				.setSize(185,10)
 				.setMin(0.0)
 				.setMax(1.0)
 				.setValue(1.0)
+				.setId(7)
 				.moveTo(layerG[n])
 				;
 				Layer_fadeInAlpha[n].getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
 
-			Layer_fadeInDuration[n] = gui.addSlider("Layer"+n+"_fadeInDuration")
+			Layer_fadeInDuration[n] = gui.addSlider("Layer_fadeInDuration"+n)
 				.setPosition(10,330)
 				.setSize(185,10)
 				.setMin(0.0)
 				.setMax(5.0)
 				.setValue(0.0)
+				.setId(8)
 				.moveTo(layerG[n])
 				;
 				Layer_fadeInDuration[n].getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
 
-			Layer_fadeOutAlpha[n] = gui.addSlider("Layer"+n+"_fadeOutAlpha")
+			Layer_fadeOutAlpha[n] = gui.addSlider("Layer_fadeOutAlpha"+n)
 				.setPosition(240,300)
 				.setSize(185,10)
 				.setMin(0.0)
 				.setMax(1.0)
 				.setValue(1.0)
+				.setId(9)
 				.moveTo(layerG[n])
 				;
 				Layer_fadeOutAlpha[n].getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
 
-			Layer_fadeOutDuration[n] = gui.addSlider("Layer"+n+"_fadeOutDuration")
+			Layer_fadeOutDuration[n] = gui.addSlider("Layer_fadeOutDuration"+n)
 				.setPosition(240,330)
 				.setSize(185,10)
 				.setMin(0.0)
 				.setMax(5.0)
 				.setValue(0.0)
+				.setId(10)
 				.moveTo(layerG[n])
 				;
 				Layer_fadeOutDuration[n].getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
@@ -161,7 +171,7 @@ void initLayerGui(){
 
 
 /*
-void Layer0_Timeline(float f){
+void Layer_Timeline0(float f){
 	float t = f;
 	if(Layer1.clips.size() > 0){
 		// if(0.1 < abs(t - Layer1.clips.get(Layer1.currentLayer).movie.time())){
@@ -189,42 +199,44 @@ void Layer0_Timeline(float f){
 */
 
 //use id to avoid repetition
-void Layer0_PlayPause(boolean b){
+/*
+void Layer_PlayPause0(boolean b){
 	layers[0].isPlaying = b;
 	if(layers[0].clips.size()>0) layers[0].clips.get(layers[0].currentClip).movie.play();
 }
 
-void Layer1_PlayPause(boolean b){
+void Layer_PlayPause1(boolean b){
 	layers[1].isPlaying = b;
 	if(layers[1].clips.size()>0) layers[1].clips.get(layers[1].currentClip).movie.play();
 }
 
-void Layer2_PlayPause(boolean b){
+void Layer_PlayPause2(boolean b){
 	layers[2].isPlaying = b;
 	if(layers[2].clips.size()>0) layers[2].clips.get(layers[2].currentClip).movie.play();
 }
 
-void Layer3_PlayPause(boolean b){
+void Layer_PlayPause3(boolean b){
 	layers[3].isPlaying = b;
 	if(layers[3].clips.size()>0) layers[3].clips.get(layers[3].currentClip).movie.play();
 }
 
-void Layer4_PlayPause(boolean b){
+void Layer_PlayPause4(boolean b){
 	layers[4].isPlaying = b;
 	if(layers[4].clips.size()>0) layers[4].clips.get(layers[4].currentClip).movie.play();
 }
 
-void Layer5_PlayPause(boolean b){
+void Layer_PlayPause5(boolean b){
 	layers[5].isPlaying = b;
 	if(layers[5].clips.size()>0) layers[5].clips.get(layers[5].currentClip).movie.play();
 }
 
-void Layer6_PlayPause(boolean b){
+void Layer_PlayPause6(boolean b){
 	layers[6].isPlaying = b;
 	if(layers[6].clips.size()>0) layers[6].clips.get(layers[6].currentClip).movie.play();
 }
 
-void Layer7_PlayPause(boolean b){
+void Layer_PlayPause7(boolean b){
 	layers[7].isPlaying = b;
 	if(layers[7].clips.size()>0) layers[7].clips.get(layers[7].currentClip).movie.play();
 }
+*/

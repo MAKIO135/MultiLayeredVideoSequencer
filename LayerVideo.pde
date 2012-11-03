@@ -10,7 +10,9 @@ class LayerVideo{
 	float layerDuration = 0.0;
 	float timelineValue = 0.0;
 	float posX=0, posY=0;
-	float Scale=1;
+	float Scale=1.0;
+	float Opacity=1.0;
+	float Delay=0.0;
 	float fadeInAlpha;
 	float fadeInDuration;
 	float fadeOutAlpha;
@@ -35,7 +37,7 @@ class LayerVideo{
 			rect(505,15,490,280);
 		}
 		if(clips.size()>0){
-			if(isPlaying){
+			/*if(isPlaying){
 				if((clips.get(currentClip)).texFiltered.putPixelsIntoTexture()){
 					tex = (clips.get(currentClip)).texFiltered;
 					tex.filter(LayerFilter, texFiltered);
@@ -50,7 +52,7 @@ class LayerVideo{
 						clips.get(currentClip).movie.play();
 					}
 				}
-			}
+			}*/
 		}
 	}
 

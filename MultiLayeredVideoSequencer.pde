@@ -27,7 +27,6 @@ void setup(){
 
 	// load videos and check if you need to load or create thumbnails
 	loadVideos();
-	Playlist = loadStrings("data/playlist.txt");
 	checkThumbnails();
 
 	// create a Clip for edition
@@ -51,13 +50,8 @@ void setup(){
 }
 
 void draw(){
-	if(editClip.isLoaded){
-		editClip.display(5,15,490,280);
-		editClip.updateClipGui();
-	}
-	
+	editClip.display();
 	layers[editLayer].display();
-
 	composition.display();
 }
 

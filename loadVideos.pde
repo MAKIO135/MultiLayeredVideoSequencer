@@ -1,12 +1,9 @@
 void loadVideos(){
 	// Path
 	String path = sketchPath+"\\data\\videos\\";
-
-	// println("Listing all filenames in "+path);
-	String[] filenames = listFileNames(path);
-	// println(filenames);
-	
-	saveStrings("data/playlist.txt", filenames);
+	Playlist = listFileNames(path);
+	// println(Playlist);
+	saveStrings("data/playlist.txt", Playlist);
 }
 
 // This function returns all the files in a directory as an array of Strings

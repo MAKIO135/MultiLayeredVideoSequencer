@@ -81,8 +81,8 @@ class Clip{
 		movie.goToBeginning();
 	}
 
-	void display(int x, int y, int w, int h){
-		if(movie.ready()){
+	void display(){
+		if(isLoaded && movie.ready()){
 			if (tex.putPixelsIntoTexture()) {
 				updateGLSLParams();
 				// apply GLSL Filter		
@@ -90,11 +90,12 @@ class Clip{
 
 				// display editClip
 				if(isEditClip){
-					// due to alpha, we need to "erase" previous frame
+					// due to Clip alpha, we need to "erase" previous frame
 					fill(20);
-					rect(x,y,w,h);
+					rect(5,15,490,280);
 
-					image(texFiltered,x,y,w,h);
+					image(texFiltered,5,15,490,280);
+					updateClipGui();
 				}
 			}
 
