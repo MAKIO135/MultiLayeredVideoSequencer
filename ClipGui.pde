@@ -317,7 +317,7 @@ void Add_Clip(){
 		layers[addTo].clips.add(c);
 		println("Clip added to Layer "+addTo);
 		println("layers[addTo].clips.size(): "+layers[addTo].clips.size());
-		layers[addTo].layerDuration += c.duration;
+		layers[addTo].layerDuration += c.duration*c.nbRepeat;
 		layers[addTo].updateLayerGui();
 	}
 }

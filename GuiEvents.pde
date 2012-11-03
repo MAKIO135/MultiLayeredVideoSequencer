@@ -62,6 +62,10 @@ void controlEvent(ControlEvent event){
 					break;
 				case(2): // Layer_PlayPause
 					layers[n].isPlaying = boolean(int(event.controller().value()));
+					if(layers[n].clips.size()>0){
+						if(layers[n].isPlaying) (layers[n].clips).get(layers[n].currentClip).movie.play();
+						else (layers[n].clips).get(layers[n].currentClip).movie.pause();
+					}
 					println("layers["+n+"].isPlaying: "+layers[n].isPlaying);
 					break;
 				case(3): // Layer_XY

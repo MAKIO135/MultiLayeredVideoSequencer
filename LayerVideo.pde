@@ -19,6 +19,7 @@ class LayerVideo{
 	float fadeOutDuration;
 
 	GLTexture tex;
+	boolean setTexture = true;
 	GLTexture texFiltered;
 	GLTextureFilter LayerFilter;
 
@@ -32,27 +33,17 @@ class LayerVideo{
 	}
 
 	void display(){
-		if(!isPlaying){
-			fill(255);
-			rect(505,15,490,280);
-		}
-		if(clips.size()>0){
-			/*if(isPlaying){
-				if((clips.get(currentClip)).texFiltered.putPixelsIntoTexture()){
-					tex = (clips.get(currentClip)).texFiltered;
-					tex.filter(LayerFilter, texFiltered);
-				}
-				clips.get(currentClip).display(505,15,490,280);
-
-				
-				if(clips.get(currentClip).duration - clips.get(currentClip).movie.time()<1){
-					clips.get(currentClip).movie.stop();
-					if(currentClip < clips.size()-1){
-						currentClip++;
-						clips.get(currentClip).movie.play();
-					}
-				}
-			}*/
+		if(clips.size()>0 && currentClip<clips.size() && isPlaying){
+			// println("Layer"+id+" playing");
+			(clips.get(currentClip)).display();
+			(clips.get(currentClip)).texFiltered.filter(LayerFilter, texFiltered);
+			image(texFiltered,505,15,490,280);
+			
+			if((clips.get(currentClip)).ended){
+				currentClip++;
+				println("Layer"+id+".currentClip: "+currentClip);
+				if(currentClip<clips.size()) (clips.get(currentClip)).movie.play();
+			}
 		}
 	}
 

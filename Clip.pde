@@ -56,12 +56,15 @@ class Clip{
 		tex.setPixelBufferSize(10);
 		tex.delPixelsWhenBufferFull(false);
 
+		movie.play();
+		while(movie.width<1){
+			movie.volume(0.0);
+		}
+		movie.goToBeginning();
+
 		if(isEditClip){
 			gui.getController("Clip_PlayPause").setValue(1.0);
-			movie.play();
-			while(movie.width<10){
-				movie.volume(0.0);
-			}
+			Clip_Timeline.setValue(0);
 
 			// calculs for fadeIn & fadeOut
 			Opacity = fadeInAlpha;
@@ -69,16 +72,12 @@ class Clip{
 			// println(fadeInAlphaStep);
 			fadeOutAlphaStep = (TargetOpacity - fadeOutAlpha)/(fadeOutDuration*movie.getSourceFrameRate());
 			// println(fadeOutAlphaStep);
-			Clip_Timeline.setValue(0);
-			movie.goToBeginning();
 		}
-		isLoaded=true;
-	}
+		else{
+			movie.pause();
+		}
 
-	void launch(){
-		movie.play();
-		movie.volume(0.0);
-		movie.goToBeginning();
+		isLoaded=true;
 	}
 
 	void display(){

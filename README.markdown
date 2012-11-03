@@ -37,10 +37,7 @@ Made with:<br>
 <h3>Needing fixes:</h3>
 <li>
 	<ul>- Video freezing randomly whitout error message: GLGraphics, GSVideo or GStreamer ??<br>
-	- ControlP5 Timeline: Sometimes not updating correctly<br>
-	- Opacity: modfying opacity slider have the clip disappear <b>FIXED</b><br>
-	- fadeOut: add fadeOut (readPosition has to be done first) <b>FIXED</b><br>
-	- Play mode: Sometimes loop when it should playback <b>FIXED</b></ul>
+	- ControlP5 Timeline: Sometimes not updating correctly<br></ul>
 </li>
 <h3>GStreamer issue</h3>
 <p>
@@ -64,9 +61,7 @@ The Layer Editor allows you to edit each Layer settings like:</p>
 </li>
 <h3>Needing fixes:</h3>
 <li>
-	<ul>-displaying clips/layers<br>
-	- have clips play one after the other<br>
-	- Layer Timeline<br>
+	<ul>- Layer Timeline<br>
 	- when adding clip to Layer add button of clip in layers Gui<br>
 	- method for re-editing Clip + method to update Clip</ul>
 </li>
