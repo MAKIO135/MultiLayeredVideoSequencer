@@ -45,6 +45,7 @@ void initCompositionGui(){
 
 void Composition_PlayPause(boolean b){
 	composition.isPlaying = b;
+	composition.timer = millis();
 }
 
 void Composition_Save() {

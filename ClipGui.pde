@@ -298,7 +298,6 @@ void Add_Clip(){
 		c.duration = editClip.duration;
 		c.lectureMode = editClip.lectureMode;
 		c.nbRepeat = editClip.nbRepeat;
-		c.totalDuration = editClip.totalDuration;
 		c.movieSpeed = editClip.movieSpeed;
 		c.TargetOpacity = editClip.TargetOpacity;
 		c.posX = editClip.posX;
@@ -326,7 +325,13 @@ void Add_Clip(){
 
 		println("Clip added to Layer "+addTo);
 		println("layers[addTo].clips.size(): "+layers[addTo].clips.size());
-		layers[addTo].layerDuration += c.duration*c.nbRepeat;
-		layers[addTo].updateLayerGui();
+		layers[addTo].layerDuration += (c.duration*c.nbRepeat)/c.movieSpeed;
+		Layer_Duration[addTo].setText("DURATION: "+layers[addTo].layerDuration);
+		
+		// check if layer duration superior to composition duration
+		if(layers[addTo].layerDuration>composition.duration){
+			composition.duration = layers[addTo].layerDuration;
+			Composition_Duration.setText("DURATION: "+composition.duration);
+		}
 	}
 }

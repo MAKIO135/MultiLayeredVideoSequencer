@@ -23,10 +23,15 @@ void controlEvent(ControlEvent event){
 		/////////////////////////////////////////////////Edit Layer choice
 		else if((event.getGroup().getName()).equals("Layer_List")){
 			editLayer = (int)event.getGroup().getValue();
-			println((int)event.getGroup().getValue());
+			// println((int)event.getGroup().getValue());
 			for (int i = 0; i<nbLayers; i++){
-				if(i==editLayer) layers[i].isEditLayer = true;
-				else layers[i].isEditLayer = false;
+				if(i==editLayer){
+					layers[i].isEditLayer = true;
+				}
+				else{
+					layers[i].isEditLayer = false;
+					layers[i].isPlaying = false;
+				}
 			}
 		}
 	}
@@ -79,6 +84,7 @@ void controlEvent(ControlEvent event){
 
 						if(layers[n].isPlaying){
 							(layers[n].clips).get(layers[n].currentClip).movie.play();
+							layers[n].timer = millis();
 						}
 						else{
 							if((layers[n].clips).get(layers[n].currentClip).movie.isPlaying()){
@@ -99,7 +105,7 @@ void controlEvent(ControlEvent event){
 					// println("layers["+n+"].Scale: "+layers[n].Scale);
 					break;
 				case(5): // Layer_Opacity
-					layers[n].Opacity = event.controller().value();
+					layers[n].TargetOpacity = event.controller().value();
 					// println("layers["+n+"].Opacity: "+layers[n].Opacity);
 					break;
 				case(6): // Layer_Delay

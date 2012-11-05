@@ -9,9 +9,11 @@ class LayerVideo{
 	boolean isPlaying = false;
 	float layerDuration = 0.0;
 	float timelineValue = 0.0;
+	float timer = 0.0;
 	float posX=0, posY=0;
 	float Scale=1.0;
-	float Opacity=1.0;
+	float Opacity=0.0;
+	float TargetOpacity=1.0;
 	float Delay=0.0;
 	float fadeInAlpha;
 	float fadeInDuration;
@@ -33,18 +35,30 @@ class LayerVideo{
 	void display(){
 		if(clips.size()>0 && currentClip<clips.size() && isPlaying){
 			// println("Layer"+id+" playing");
+			(clips.get(currentClip)).display();
+			updateGLSLParams();
+			(clips.get(currentClip)).texFiltered.filter(LayerFilter, tex);
+
+			// display editLayer in editor
 			if(isEditLayer){
 				// due to Layer alpha, we need to "erase" previous frame
 				fill(20);
 				rect(505,15,490,280);
+
+				image(tex,505,15,490,280);
+				updateLayerGui();
 			}
-			(clips.get(currentClip)).display();
-			updateGLSLParams();
-			(clips.get(currentClip)).texFiltered.filter(LayerFilter, tex);
-			image(tex,505,15,490,280);
 			
 			if((clips.get(currentClip)).ended){
 				println("Layer"+id+".currentClip: "+currentClip+" ended");
+				if(isEditLayer){
+					float timelineValueUp=0.0;
+					for (int i = 0; i<= currentClip; i++){
+						timelineValueUp += ((clips.get(currentClip)).duration*(clips.get(currentClip)).nbRepeat)/(clips.get(currentClip)).movieSpeed;
+					}
+					timelineValue = timelineValueUp;
+				}
+
 				currentClip++;
 				if(currentClip<clips.size()){
 					println("Layer"+id+".currentClip: "+currentClip);
@@ -60,18 +74,26 @@ class LayerVideo{
 	}
 
 	void updateLayerGui(){
+		timelineValue += (millis()-timer)/1000;
+		if(timelineValue>layerDuration) timelineValue=0.0;
+		timer = millis();
 		Layer_Timeline[id].setRange(0.0, layerDuration);
-		Layer_Timeline[id].setValue(0.0);
+		Layer_Timeline[id].setValue(timelineValue);
 		Layer_Timeline[id].getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
-		Layer_Duration[id].setText("DURATION: "+layerDuration);
 	}
 
 	void updateGLSLParams(){
 		LayerFilter.setParameterValue("posXY", new float[] {posX, posY});
 		LayerFilter.setParameterValue("Scale", Scale);
-		// if(TargetOpacity-Opacity>.1 && timelineValue<fadeInDuration) Opacity += fadeInAlphaStep;
-		// else if(nbLecture==nbRepeat && movie.duration()-movie.time()<fadeOutDuration) Opacity -= fadeOutAlphaStep;// depends on playMode
-		// else Opacity = TargetOpacity;
+		if(timelineValue<fadeInDuration){
+			Opacity = fadeInAlpha+timelineValue*((TargetOpacity-fadeInAlpha)/fadeInDuration);
+			println(Opacity);
+		}
+		else if(layerDuration-timelineValue<fadeOutDuration){
+			Opacity = fadeOutAlpha+(layerDuration-timelineValue)*((TargetOpacity-fadeOutAlpha)/fadeOutDuration);
+			println(Opacity);
+		}
+		else Opacity = TargetOpacity;
 		LayerFilter.setParameterValue("Opacity", Opacity);
 	}
 }

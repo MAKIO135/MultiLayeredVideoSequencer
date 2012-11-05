@@ -63,10 +63,14 @@ The Layer Editor allows you to edit each Layer settings like:</p>
 	- delay before playing first clip of the Layer</ul>
 </li>
 
+<h3>Needing fixes:</h3>
+<li>
+	<ul>- Layer Timeline is buggy when adding clips with "Aller Retour" playmode</ul>
+</li>
+
 <h3>Needs:</h3>
 <li>
-	<ul>- Layer Timeline<br>
-	- method for re-editing Clip + method to update Clip</ul>
+	<ul>- method for re-editing Clip + method to update Clip</ul>
 </li>
 <br>
 <br>
@@ -82,5 +86,4 @@ The Layer Editor allows you to edit each Layer settings like:</p>
 	- BlendModes<br>
 	- Save method with JSON<br>
 	- Load method</ul>
-	- Composition Timeline<br>
 </li>

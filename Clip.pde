@@ -13,7 +13,6 @@ class Clip{
 	int nbRepeat=1;// number of repetition
 	boolean addLectureSwitch=false;// utility boolean to count nbLecture
 	int nbLecture=1;// current number of reads
-	float totalDuration;// duration of the movie multiplied by number of repetition
 
 	float movieSpeed=1.0;
 	float TargetOpacity=1.0;
@@ -76,7 +75,8 @@ class Clip{
 		else{
 			movie.pause();
 		}
-
+		
+		duration = movie.duration();
 		isLoaded=true;
 	}
 
@@ -87,7 +87,7 @@ class Clip{
 				// apply GLSL Filter
 				tex.filter(ClipFilter, texFiltered);
 
-				// display editClip
+				// display editClip in editor
 				if(isEditClip){
 					// due to Clip alpha, we need to "erase" previous frame
 					fill(20);
@@ -154,8 +154,6 @@ class Clip{
 	}
 
 	void updateClipGui(){
-		duration = movie.duration();
-		totalDuration = duration * nbRepeat;
 		Clip_Timeline.setRange(0.0, duration);
 		Clip_Timeline.setValue(movie.time());
 		Clip_Timeline.getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);

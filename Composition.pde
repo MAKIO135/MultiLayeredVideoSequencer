@@ -2,8 +2,9 @@ class Composition{
 	PApplet parent;
 	GLTexture tex;
 	boolean isPlaying = false;
-	float startTime = 0.0;
-	float playPosition;
+	float duration = 0.0;
+	float timelineValue = 0.0;
+	float timer = 0.0;
 
 	Composition(PApplet applet){
 		parent = applet;
@@ -13,25 +14,29 @@ class Composition{
 	void display(){
 		fill(255);
 		rect(1005,15,490,280);
-		/*
 		if(isPlaying){
-			playPosition=millis-startTime;// have to take pause in account
+			updateCompositionGui();
+		/*
 			for (int i = nbLayers-1; i>=0; i--){
 				if(playPosition>layers[i].delay){
 					layers[i].display();
 					
 				}
 			}
-		}
 		*/
-	}
-
-	void start(){
-		startTime = millis();
-		playPosition = 0.0;
+		}
 	}
 
 	void export(){
 		JSONObject export = new JSONObject();
+	}
+
+	void updateCompositionGui(){
+		timelineValue += (millis()-timer)/1000;
+		if(timelineValue>duration) timelineValue=0.0;
+		timer = millis();
+		Composition_Timeline.setRange(0.0, duration);
+		Composition_Timeline.setValue(timelineValue);
+		Composition_Timeline.getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
 	}
 }
