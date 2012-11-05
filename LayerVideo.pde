@@ -18,9 +18,8 @@ class LayerVideo{
 	float fadeOutAlpha;
 	float fadeOutDuration;
 
-	GLTexture tex;
 	boolean setTexture = true;
-	GLTexture texFiltered;
+	GLTexture tex;
 	GLTextureFilter LayerFilter;
 
 	LayerVideo(PApplet applet, int _id){
@@ -28,7 +27,6 @@ class LayerVideo{
 		id = _id;
 		clips = new ArrayList<Clip>();
 		tex = new GLTexture(parent);
-		texFiltered = new GLTexture(parent);
 		LayerFilter = new GLTextureFilter(parent, "LayerFilter.xml");
 	}
 
@@ -42,8 +40,8 @@ class LayerVideo{
 			}
 			(clips.get(currentClip)).display();
 			updateGLSLParams();
-			(clips.get(currentClip)).texFiltered.filter(LayerFilter, texFiltered);
-			image(texFiltered,505,15,490,280);
+			(clips.get(currentClip)).texFiltered.filter(LayerFilter, tex);
+			image(tex,505,15,490,280);
 			
 			if((clips.get(currentClip)).ended){
 				println("Layer"+id+".currentClip: "+currentClip+" ended");

@@ -15,6 +15,7 @@ int editLayer = 0;
 
 //////////////////////////////Composition
 Composition composition;
+GLTextureFilter[] BlendModes;
 
 //////////////////////////////GUI
 ControlP5 gui;
@@ -41,7 +42,8 @@ void setup(){
 
 	// create composition
 	composition = new Composition(this);
-
+	initBlendModes();
+	
 	// init GUI
 	gui = new ControlP5(this);
 	initClipGui();

@@ -1,8 +1,8 @@
-<filter name="Clip Filter">
-	<description>Clip Filter with posXY,Scale,Opacity</description>
-	<fragment>ClipFilter.glsl</fragment>
+<filter name="Layer Filter">
+	<description>Layer Filter with posXY,Scale,Opacity</description>
+	<fragment>LayerFilter.glsl</fragment>
 	<textures input="1" output="1"></textures>
-	<parameter type="vec2" name="posXY" label="Clip position">0 0</parameter>
-	<parameter type="float" name="Scale" label="Scale">1</parameter>
-	<parameter type="float" name="Opacity" label="Opacity">1</parameter>
+	<parameter type="vec2" name="posXY" label="Layer position">0 0</parameter>
+	<parameter type="float" name="Scale" label="Layer Scale">1</parameter>
+	<parameter type="float" name="Opacity" label="Layer Opacity">1</parameter>
 </filter>

@@ -42,3 +42,11 @@ void initCompositionGui(){
 		.moveTo(compositionGui)
 		;
 }
+
+void Composition_PlayPause(boolean b){
+	composition.isPlaying = b;
+}
+
+void Composition_Save() {
+	composition.export();
+}

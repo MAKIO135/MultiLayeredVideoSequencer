@@ -23,6 +23,7 @@ void controlEvent(ControlEvent event){
 		/////////////////////////////////////////////////Edit Layer choice
 		else if((event.getGroup().getName()).equals("Layer_List")){
 			editLayer = (int)event.getGroup().getValue();
+			println((int)event.getGroup().getValue());
 			for (int i = 0; i<nbLayers; i++){
 				if(i==editLayer) layers[i].isEditLayer = true;
 				else layers[i].isEditLayer = false;
@@ -39,6 +40,7 @@ void controlEvent(ControlEvent event){
 			}
 		}
 
+		// choice of the clip to edit
 		else if((event.getController().getName().substring(0,4)).equals("Clip")){
 			for(int i=0; i<Playlist.length; i++){
 				if((event.getController().getName()).equals("Clip"+i)){
@@ -83,22 +85,22 @@ void controlEvent(ControlEvent event){
 								(layers[n].clips).get(layers[n].currentClip).movie.pause();
 							}
 						}
-				}
+					}
 					// println("layers["+n+"].isPlaying: "+layers[n].isPlaying);
 					break;
 				case(3): // Layer_XY
 					layers[n].posX = map(event.getController().arrayValue()[0],-100,100,-1,1);
-					println("layers["+n+"].posX: "+layers[n].posX);
+					// println("layers["+n+"].posX: "+layers[n].posX);
 					layers[n].posY = map(event.getController().arrayValue()[1],-100,100,-1,1);
-					println("layers["+n+"].posY: "+layers[n].posY);
+					// println("layers["+n+"].posY: "+layers[n].posY);
 					break;
 				case(4): // Layer_Scale
 					layers[n].Scale = event.controller().value();
-					println("layers["+n+"].Scale: "+layers[n].Scale);
+					// println("layers["+n+"].Scale: "+layers[n].Scale);
 					break;
 				case(5): // Layer_Opacity
 					layers[n].Opacity = event.controller().value();
-					println("layers["+n+"].Opacity: "+layers[n].Opacity);
+					// println("layers["+n+"].Opacity: "+layers[n].Opacity);
 					break;
 				case(6): // Layer_Delay
 					layers[n].Delay = event.controller().value();

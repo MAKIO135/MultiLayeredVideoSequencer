@@ -315,6 +315,15 @@ void Add_Clip(){
 		c.setVideo();
 
 		layers[addTo].clips.add(c);
+
+		gui.addButton("Layer"+addTo+"Clip"+layers[addTo].clips.size())
+			.setPosition(10+46*(layers[addTo].clips.size()-1), 75)
+			.setSize(45,45)
+			.setImage(thumbnails[c.movieNum])
+			.setView(new ImageButton())
+			.moveTo(layerG[addTo])
+			;
+
 		println("Clip added to Layer "+addTo);
 		println("layers[addTo].clips.size(): "+layers[addTo].clips.size());
 		layers[addTo].layerDuration += c.duration*c.nbRepeat;

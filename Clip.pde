@@ -117,6 +117,7 @@ class Clip{
 					}
 					else{
 						ended = true;
+						nbLecture = 0;
 						movie.goToBeginning();
 						movie.pause();
 					}
@@ -134,6 +135,7 @@ class Clip{
 					}
 					else{
 						ended = true;
+						nbLecture = 0;
 						movie.goToBeginning();
 						movie.pause();
 					}

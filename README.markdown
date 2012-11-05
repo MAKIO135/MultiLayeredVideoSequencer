@@ -21,6 +21,8 @@ Made with:<br>
 	- Composition: all the Layers playing at the same time (after their launch delay is met) with the blendMode chosen for the current clip of each Layer.</ul>
 </li>
 <br>
+
+
 <h2>Part 1: Clip Editor</h2>
 <img src="http://makio.free.fr/divers/Github/VideoSequencerPart1.png" alt="Video Sequencer Part 1"><br>
 <p>The Clip Editor allows you to edit Clip settings like:</p>
@@ -35,6 +37,7 @@ Made with:<br>
 	- custom fade in and fade out<br>
 	- choice of VideoLayer to add the clip to</ul>
 </li>
+
 <h3>Needing fixes:</h3>
 <li>
 	<ul>- Some videos are freezing randomly whitout error message: codecs? GLGraphics, GSVideo or GStreamer ??<br>
@@ -60,14 +63,9 @@ The Layer Editor allows you to edit each Layer settings like:</p>
 	- custom fade in and fade out<br>
 	- delay before playing first clip of the Layer</ul>
 </li>
-<h3>Needing fixes:</h3>
-<li>
-	<ul>- LayerFilter GLSL does not multiply Opacity from clip</ul>
-</li>
 <h3>Needs:</h3>
 <li>
-	<ul>- when adding clip to Layer add button of clip in layers Gui<br>
-	- Layer Timeline<br>
+	<ul>- Layer Timeline<br>
 	- method for re-editing Clip + method to update Clip</ul>
 </li>
 <br>
@@ -77,11 +75,11 @@ The Layer Editor allows you to edit each Layer settings like:</p>
 <p></p>
 <h3>Needs:</h3>
 <li>
-	<ul>- BlendModes (Coming soon)<br>
-	- Layers display with blend modes<br>
-	- Composition Timeline<br>
+	<ul>- Layers display with blend modes<br>
+	- BlendModes<br>
 	- Save method with JSON<br>
 	- Load method</ul>
+	- Composition Timeline<br>
 </li>
 <br>
 <br>

@@ -42,6 +42,7 @@ void initLayerGui(){
 		.moveTo(layerGui)
 		;
 
+		// Accoordion's content
 		for (int n = nbLayers-1; n>=0; n--){
 			layerG[n] = gui.addGroup("Layer"+n)
 				.setWidth(490)
