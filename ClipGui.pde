@@ -216,7 +216,7 @@ void initClipGui() {
 			Clip_fadeOutDuration.getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
 
 		Add_to_Layer = gui.addDropdownList("Add_to_Layer")
-			.setPosition(295,440)
+			.setPosition(295,420)
 			.setSize(120,50)
 			.setItemHeight(15)
 			.moveTo(clipGui)
@@ -227,7 +227,7 @@ void initClipGui() {
 			}
 
 		gui.addButton("Add_Clip")
-			.setPosition(425,430)
+			.setPosition(425,410)
 			.setSize(50,10)
 			.moveTo(clipGui)
 			;
@@ -247,13 +247,17 @@ void Clip_Timeline(float f){
 
 void Clip_PlayPause(boolean b){
 	if (editClip.movie!=null){
-		if(b)editClip.movie.play();
+		if(b){
+			editClip.movie.play();
+			editClip.timer=millis();
+		}
 		else editClip.movie.pause();
 	}
 }
 
 void Clip_nbRepeat(int f){
 	editClip.nbRepeat=f;
+	Clip_Duration.setText("DURATION: "+editClip.duration*editClip.nbRepeat/editClip.movieSpeed);
 }
 
 void Clip_Speed(float f){
@@ -324,7 +328,7 @@ void Add_Clip(){
 			;
 
 		println("Clip added to Layer "+addTo);
-		println("layers[addTo].clips.size(): "+layers[addTo].clips.size());
+		println("layers["+addTo+"].clips.size(): "+layers[addTo].clips.size());
 		layers[addTo].duration += (c.duration*c.nbRepeat)/c.movieSpeed;
 		Layer_Duration[addTo].setText("DURATION: "+layers[addTo].duration);
 		

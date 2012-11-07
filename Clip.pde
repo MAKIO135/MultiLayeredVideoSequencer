@@ -8,11 +8,12 @@ class Clip{
 	int movieNum=999;
 	GSMovie movie;
 	float duration;// duration of the movie
-	float readPosition;// time of the reading on totalDuration
+	float timelineValue = 0.0;
+	float timer = 0.0;
 	int lectureMode=0;// 0:loop - 1:play/playback
 	int nbRepeat=1;// number of repetition
-	boolean addLectureSwitch=false;// utility boolean to count nbLecture
 	int nbLecture=1;// current number of reads
+	boolean addLectureSwitch=false;// utility boolean to count nbLecture
 
 	float movieSpeed=1.0;
 	float TargetOpacity=1.0;
@@ -76,12 +77,14 @@ class Clip{
 			movie.pause();
 		}
 
+		movie.speed(movieSpeed);
 		duration = movie.duration();
 		isLoaded=true;
 	}
 
 	void display(){
 		if(isLoaded && movie.ready()){
+			if(lectureMode == 0) movie.speed(movieSpeed);
 			if (tex.putPixelsIntoTexture()) {
 				updateGLSLParams();
 				// apply GLSL Filter
@@ -99,54 +102,47 @@ class Clip{
 			}
 
 			// check loop/playback/stop
-			if(movie.frame()<=2*max(1,movieSpeed)){
-				if(lectureMode==1) movie.speed(movieSpeed);
-				if(addLectureSwitch){
-					nbLecture++;
-					// println(nbLecture);
-					addLectureSwitch=false;
-				}
-			}
-			else if(movie.length()-movie.frame()<=2*max(1,movieSpeed)){
-				// lectureMode: loop
-				if(lectureMode==0){
-					if(nbLecture<nbRepeat || isEditClip){
-						movie.goToBeginning();
-						movie.pause();
-						movie.speed(movieSpeed);
-						movie.play();
-						nbLecture++;
-						// println(nbLecture);
-					}
-					else{
-						ended = true;
-						nbLecture = 1;
-						movie.goToBeginning();
-						movie.pause();
-					}
-				}
-
-				// lectureMode: play/playback
-				else if(lectureMode==1) {
-					if(nbLecture<nbRepeat || isEditClip){
-						if(!addLectureSwitch){
-							nbLecture++;
-							// println(nbLecture);
-							addLectureSwitch=true;
-						}
-						movie.speed(-movieSpeed);
-					}
-					else{
-						ended = true;
-						nbLecture = 1;
-						movie.goToBeginning();
-						movie.pause();
-					}
-				}
-			}// end check loop/playback/stop
+			checkLoop();
 		}
 	}
 	
+	void checkLoop() {
+		// check at Beginning
+		if(addLectureSwitch && movie.frame()<=2*max(1,movieSpeed)){
+			movie.speed(movieSpeed);
+			nbLecture++;
+			addLectureSwitch=false;
+		}
+		// check at end
+		else if(movie.length()-movie.frame()<=2*max(1,movieSpeed)){
+			// lectureMode: loop
+			if(lectureMode==0){
+				movie.goToBeginning();
+				movie.pause();
+				movie.speed(movieSpeed);
+				movie.play();
+				nbLecture++;
+			}
+
+			// lectureMode: play/playback
+			else if(lectureMode==1 && !addLectureSwitch) {
+				nbLecture++;
+				addLectureSwitch=true;
+				movie.speed(-movieSpeed);
+			}
+		}// end check loop/playback/stop
+
+		if(nbLecture > nbRepeat && !isEditClip){
+			println("nbLecture: "+nbLecture);
+			println("nbRepeat: "+nbRepeat);
+			ended = true;
+			nbLecture = 1;
+			movie.goToBeginning();
+			movie.pause();
+			addLectureSwitch=false;
+		}
+	}
+
 	void updateGLSLParams(){
 		ClipFilter.setParameterValue("posXY", new float[] {posX, posY});
 		ClipFilter.setParameterValue("Scale", Scale);
@@ -160,6 +156,6 @@ class Clip{
 		Clip_Timeline.setRange(0.0, duration);
 		Clip_Timeline.setValue(movie.time());
 		Clip_Timeline.getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
-		Clip_Duration.setText("DURATION: "+duration);
+		Clip_Duration.setText("DURATION: "+duration*nbRepeat/movieSpeed);
 	}
 }

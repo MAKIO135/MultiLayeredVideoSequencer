@@ -32,13 +32,9 @@ void initLayerGui(){
 		;
 
 	Accordion LayersGui = gui.addAccordion("LayersGui")
-		.setPosition(0,40)
+		.setPosition(0,10)
 		.setWidth(490)
-		.moveTo(layerGui)
-		;
-
-	DropdownList Layer_List = gui.addDropdownList("Layer_List")
-		.setPosition(10,20)
+		.setCollapseMode(Accordion.SINGLE)
 		.moveTo(layerGui)
 		;
 
@@ -47,6 +43,7 @@ void initLayerGui(){
 			layerG[n] = gui.addGroup("Layer"+n)
 				.setWidth(490)
 				.setBackgroundHeight(370)
+				.activateEvent(true)
 				;
 
 			Layer_Timeline[n] = gui.addSlider("Layer_Timeline"+n)
@@ -163,9 +160,6 @@ void initLayerGui(){
 
 			// add to accordion
 			LayersGui.addItem(layerG[n]);
-			Layer_List.addItem("Layer"+n, n);
 		}
-
-	Layer_List.setIndex(7);
 	LayersGui.open(7);
 }

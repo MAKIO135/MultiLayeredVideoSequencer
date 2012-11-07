@@ -1,5 +1,6 @@
 void controlEvent(ControlEvent event){
 	if(event.isGroup()){
+		// println(event.getGroup().getName()+" is Group");
 		/////////////////////////////////////////////////Clip Events
 		if((event.getGroup().getName()).equals("clipList")){
 			if(!event.getGroup().isOpen()) background(20);
@@ -21,9 +22,11 @@ void controlEvent(ControlEvent event){
 		}
 
 		/////////////////////////////////////////////////Edit Layer choice
-		else if((event.getGroup().getName()).equals("Layer_List")){
-			editLayer = (int)event.getGroup().getValue();
-			// println((int)event.getGroup().getValue());
+		else if((event.getGroup().getName().substring(0,5)).equals("Layer")){
+			String s = event.getGroup().getName();
+			// println(s);
+			editLayer = int(Character.toString(s.charAt(s.length()-1)));
+			// println(editLayer);
 			for (int i = 0; i<nbLayers; i++){
 				if(i==editLayer){
 					layers[i].isEditLayer = true;
@@ -37,6 +40,7 @@ void controlEvent(ControlEvent event){
 	}
 
 	else if (event.isController()){
+		// println(event.getController().getName()+" is Controller");
 		/////////////////////////////////////////////////Clips Events
 		if((event.getController().getName()).equals("Clip_XY")){
 			if(editClip != null){
@@ -59,10 +63,12 @@ void controlEvent(ControlEvent event){
 
 		/////////////////////////////////////////////////Layers Events
 		else if((event.getController().getName().substring(0,5)).equals("Layer")){
+			// get number of the Layer
 			String s = event.getController().getName();
 			// println(s);
-			int n = int(Character.toString(s.charAt(s.length()-1)));// get number of the Layer
+			int n = int(Character.toString(s.charAt(s.length()-1)));
 			// println(n);
+			layers[n].isEditLayer = true;
 
 			switch(event.controller().id()){
 				case(0): // Layer_Timeline
@@ -74,7 +80,7 @@ void controlEvent(ControlEvent event){
 				case(2): // Layer_PlayPause
 					if(layers[n].clips.size()>0 && !composition.isPlaying){
 						layers[n].isPlaying = boolean(int(event.controller().value()));
-
+						println("//////////////////////////////");
 						if(layers[n].isPlaying){
 							if(!(layers[n].clips).get(layers[n].currentClip).movie.isPlaying()){// if layer.currentClip is not playing -> play
 								(layers[n].clips).get(layers[n].currentClip).movie.play();
