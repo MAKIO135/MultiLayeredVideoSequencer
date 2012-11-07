@@ -78,10 +78,6 @@ class Composition{
 		}
 	}
 
-	void export(){
-		JSONObject export = new JSONObject();
-	}
-
 	void updateCompositionGui(){
 		timelineValue += (millis()-timer)/1000;
 		timer = millis();

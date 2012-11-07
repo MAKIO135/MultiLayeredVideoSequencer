@@ -19,5 +19,4 @@ void initBlendModes(){
 	BlendModes[15] = new GLTextureFilter(this, "data/BlendModes/BlendSoftLight.xml");
 	BlendModes[16] = new GLTextureFilter(this, "data/BlendModes/BlendOverlay.xml");
 	BlendModes[17] = new GLTextureFilter(this, "data/BlendModes/BlendHardLight.xml");
-	println("BlendModes Initialized\n");
 }

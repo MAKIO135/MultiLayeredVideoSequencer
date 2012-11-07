@@ -25,7 +25,7 @@ class Clip{
 	float fadeOutAlpha=1.0;
 	float fadeOutAlphaStep;
 	float fadeOutDuration=0.1;
-	int blendMode=0;	
+	int blendMode=0;
 
 	GLTexture tex;
 	GLTexture texFiltered;
