@@ -57,6 +57,13 @@ void draw(){
 	composition.display();
 }
 
+
 void movieEvent(GSMovie movie) {
 	movie.read();
+}
+
+
+// used for debug
+void keyPressed(){
+	println(editClip.movieSpeed);
 }

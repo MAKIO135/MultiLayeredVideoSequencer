@@ -75,7 +75,7 @@ class Clip{
 		else{
 			movie.pause();
 		}
-		
+
 		duration = movie.duration();
 		isLoaded=true;
 	}
@@ -100,7 +100,7 @@ class Clip{
 
 			// check loop/playback/stop
 			if(movie.frame()<=2*max(1,movieSpeed)){
-				movie.speed(movieSpeed);
+				if(lectureMode==1) movie.speed(movieSpeed);
 				if(addLectureSwitch){
 					nbLecture++;
 					// println(nbLecture);
@@ -112,12 +112,15 @@ class Clip{
 				if(lectureMode==0){
 					if(nbLecture<nbRepeat || isEditClip){
 						movie.goToBeginning();
+						movie.pause();
+						movie.speed(movieSpeed);
+						movie.play();
 						nbLecture++;
 						// println(nbLecture);
 					}
 					else{
 						ended = true;
-						nbLecture = 0;
+						nbLecture = 1;
 						movie.goToBeginning();
 						movie.pause();
 					}
@@ -135,7 +138,7 @@ class Clip{
 					}
 					else{
 						ended = true;
-						nbLecture = 0;
+						nbLecture = 1;
 						movie.goToBeginning();
 						movie.pause();
 					}

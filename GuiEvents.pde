@@ -72,22 +72,17 @@ void controlEvent(ControlEvent event){
 					// layers[n].Duration = event.controller().value();
 					break;
 				case(2): // Layer_PlayPause
-					if(layers[n].clips.size()>0){
+					if(layers[n].clips.size()>0 && !composition.isPlaying){
 						layers[n].isPlaying = boolean(int(event.controller().value()));
 
-						if(layers[n].currentClip==layers[n].clips.size()){//restart
-							layers[n].currentClip = 0;
-							for(int i = 0; i<layers[n].clips.size(); i++){
-								(layers[n].clips).get(i).ended = false;
-							}
-						}
-
 						if(layers[n].isPlaying){
-							(layers[n].clips).get(layers[n].currentClip).movie.play();
+							if(!(layers[n].clips).get(layers[n].currentClip).movie.isPlaying()){// if layer.currentClip is not playing -> play
+								(layers[n].clips).get(layers[n].currentClip).movie.play();
+							}
 							layers[n].timer = millis();
 						}
 						else{
-							if((layers[n].clips).get(layers[n].currentClip).movie.isPlaying()){
+							if((layers[n].clips).get(layers[n].currentClip).movie.isPlaying()){// if layer.currentClip is playing -> pause
 								(layers[n].clips).get(layers[n].currentClip).movie.pause();
 							}
 						}
@@ -111,6 +106,15 @@ void controlEvent(ControlEvent event){
 				case(6): // Layer_Delay
 					layers[n].Delay = event.controller().value();
 					// println("layers["+n+"].Delay: "+layers[n].Delay);
+					
+					float MaxLayerDuration=0.0;
+					for(int i=0; i<nbLayers; i++){
+						if(layers[n].Delay+layers[n].duration>MaxLayerDuration){
+							MaxLayerDuration = layers[n].Delay+layers[n].duration;
+						}
+					}
+					composition.duration = MaxLayerDuration;
+					Composition_Duration.setText("DURATION: "+composition.duration);
 					break;
 				case(7): // Layer_fadeInAlpha
 					layers[n].fadeInAlpha = event.controller().value();

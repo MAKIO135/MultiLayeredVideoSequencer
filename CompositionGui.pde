@@ -45,6 +45,9 @@ void initCompositionGui(){
 
 void Composition_PlayPause(boolean b){
 	composition.isPlaying = b;
+	for (int i = 0; i<nbLayers; i++){
+		layers[i].isPlaying=false;
+	}
 	composition.timer = millis();
 }
 

@@ -325,12 +325,12 @@ void Add_Clip(){
 
 		println("Clip added to Layer "+addTo);
 		println("layers[addTo].clips.size(): "+layers[addTo].clips.size());
-		layers[addTo].layerDuration += (c.duration*c.nbRepeat)/c.movieSpeed;
-		Layer_Duration[addTo].setText("DURATION: "+layers[addTo].layerDuration);
+		layers[addTo].duration += (c.duration*c.nbRepeat)/c.movieSpeed;
+		Layer_Duration[addTo].setText("DURATION: "+layers[addTo].duration);
 		
 		// check if layer duration superior to composition duration
-		if(layers[addTo].layerDuration>composition.duration){
-			composition.duration = layers[addTo].layerDuration;
+		if(layers[addTo].duration>composition.duration){
+			composition.duration = layers[addTo].duration;
 			Composition_Duration.setText("DURATION: "+composition.duration);
 		}
 	}

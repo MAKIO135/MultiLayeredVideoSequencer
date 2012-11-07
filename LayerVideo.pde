@@ -7,7 +7,7 @@ class LayerVideo{
 
 	boolean isEditLayer = false;
 	boolean isPlaying = false;
-	float layerDuration = 0.0;
+	float duration = 0.0;
 	float timelineValue = 0.0;
 	float timer = 0.0;
 	float posX=0, posY=0;
@@ -54,7 +54,7 @@ class LayerVideo{
 				if(isEditLayer){
 					float timelineValueUp=0.0;
 					for (int i = 0; i<= currentClip; i++){
-						timelineValueUp += ((clips.get(currentClip)).duration*(clips.get(currentClip)).nbRepeat)/(clips.get(currentClip)).movieSpeed;
+						timelineValueUp += ((clips.get(i)).duration*(clips.get(i)).nbRepeat)/(clips.get(i)).movieSpeed;
 					}
 					timelineValue = timelineValueUp;
 				}
@@ -65,9 +65,15 @@ class LayerVideo{
 					(clips.get(currentClip)).movie.play();
 				}
 				else{
-					// gui.getController("Layer_PlayPause"+id).setValue(0.0);
+					// gui.getController("Layer_PlayPause"+id).setValue(0.0);// problem with controlp5
 					println("Layer"+id+" ended");
 					isPlaying = false;
+
+					// restart clips
+					currentClip = 0;
+					for(int i = 0; i<clips.size(); i++){
+						clips.get(i).ended = false;
+					}
 				}
 			}
 		}
@@ -75,9 +81,9 @@ class LayerVideo{
 
 	void updateLayerGui(){
 		timelineValue += (millis()-timer)/1000;
-		if(timelineValue>layerDuration) timelineValue=0.0;
+		if(timelineValue>duration) timelineValue=0.0;
 		timer = millis();
-		Layer_Timeline[id].setRange(0.0, layerDuration);
+		Layer_Timeline[id].setRange(0.0, duration);
 		Layer_Timeline[id].setValue(timelineValue);
 		Layer_Timeline[id].getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
 	}
@@ -87,11 +93,11 @@ class LayerVideo{
 		LayerFilter.setParameterValue("Scale", Scale);
 		if(timelineValue<fadeInDuration){
 			Opacity = fadeInAlpha+timelineValue*((TargetOpacity-fadeInAlpha)/fadeInDuration);
-			println(Opacity);
+			// println(Opacity);
 		}
-		else if(layerDuration-timelineValue<fadeOutDuration){
-			Opacity = fadeOutAlpha+(layerDuration-timelineValue)*((TargetOpacity-fadeOutAlpha)/fadeOutDuration);
-			println(Opacity);
+		else if(duration-timelineValue<fadeOutDuration){
+			Opacity = fadeOutAlpha+(duration-timelineValue)*((TargetOpacity-fadeOutAlpha)/fadeOutDuration);
+			// println(Opacity);
 		}
 		else Opacity = TargetOpacity;
 		LayerFilter.setParameterValue("Opacity", Opacity);
