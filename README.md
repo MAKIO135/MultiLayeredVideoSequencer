@@ -63,11 +63,6 @@ The Layer Editor allows you to edit each Layer settings like:</p>
 	- delay before playing first clip of the Layer</ul>
 </li>
 
-<h3>Needing fixes:</h3>
-<li>
-	<ul>- Layer Timeline is buggy when adding clips with "Aller Retour" playmode</ul>
-</li>
-
 <h3>Needs:</h3>
 <li>
 	<ul>- method for re-editing Clip + method to update Clip</ul>
@@ -80,10 +75,13 @@ The Layer Editor allows you to edit each Layer settings like:</p>
 <img src="http://makio.free.fr/divers/Github/VideoSequencerPart3.png" alt="Video Sequencer Part 3"><br>
 <p></p>
 
+<h3>Needing fixes:</h3>
+<li>
+	<ul>-GLSL BlendModes behavior regarding Opacity of the 2 Layers mixed</ul>
+</li>
+
 <h3>Needs:</h3>
 <li>
 	<ul>- Layers display with blend modes<br>
-	- BlendModes<br>
-	- Save method with JSON<br>
 	- Load method</ul>
 </li>
