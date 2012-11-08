@@ -356,7 +356,8 @@ void Add_Clip(){
 }
 
 void Update_Clip(){
-	if(updateLayerClip[0] != 999){
+	if(updateLayerClip[0] != 999 && !updatingClip){
+		updatingClip=true;
 		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).movie.stop();
 		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).movieNum = editClip.movieNum;
 		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).duration = editClip.duration;
@@ -377,5 +378,19 @@ void Update_Clip(){
 		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).setVideo();
 		updateLayerClip = new int[]{999,999};
 		Update_ClipId.setText("LAYER_ CLIP_");
+
+		float updateLayerDuration=0.0;
+		for(int i=0; i<layers[updateLayerClip[0]].clips.size(); i++){
+			updateLayerDuration+=layers[updateLayerClip[0]].clips.get(i).duration;
+		}
+		layers[updateLayerClip[0]].duration = updateLayerDuration;
+		Layer_Duration[updateLayerClip[0]].setText("DURATION: "+updateLayerDuration);
+
+		// check if layer duration superior to composition duration
+		if(layers[updateLayerClip[0]].duration>composition.duration){
+			composition.duration = layers[addTo].duration;
+			Composition_Duration.setText("DURATION: "+composition.duration);
+		}
+		updatingClip=false;
 	}
 }

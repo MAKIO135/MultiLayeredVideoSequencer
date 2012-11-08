@@ -22,10 +22,10 @@ class Clip{
 	float Scale=1.0;
 	float fadeInAlpha=1.0;
 	float fadeInAlphaStep;
-	float fadeInDuration=0.1;
+	float fadeInDuration=0.0;
 	float fadeOutAlpha=1.0;
 	float fadeOutAlphaStep;
-	float fadeOutDuration=0.1;
+	float fadeOutDuration=0.0;
 	int blendMode=0;
 
 	GLTexture tex;
@@ -62,17 +62,15 @@ class Clip{
 			movie.volume(0.0);
 		}
 		movie.goToBeginning();
-
+		// calculs for fadeIn & fadeOut
+		Opacity = fadeInAlpha;
+		fadeInAlphaStep = (TargetOpacity - fadeInAlpha)/(fadeInDuration*movie.getSourceFrameRate());
+		// println(fadeInAlphaStep);
+		fadeOutAlphaStep = (TargetOpacity - fadeOutAlpha)/(fadeOutDuration*movie.getSourceFrameRate());
+		// println(fadeOutAlphaStep);
 		if(isEditClip){
 			gui.getController("Clip_PlayPause").setValue(1.0);
 			Clip_Timeline.setValue(0);
-
-			// calculs for fadeIn & fadeOut
-			Opacity = fadeInAlpha;
-			fadeInAlphaStep = (TargetOpacity - fadeInAlpha)/(fadeInDuration*movie.getSourceFrameRate());
-			// println(fadeInAlphaStep);
-			fadeOutAlphaStep = (TargetOpacity - fadeOutAlpha)/(fadeOutDuration*movie.getSourceFrameRate());
-			// println(fadeOutAlphaStep);
 		}
 		else{
 			movie.pause();
@@ -95,7 +93,7 @@ class Clip{
 				if(isEditClip){
 					// due to Clip alpha, we need to "erase" previous frame
 					fill(20);
-					rect(5,15,490,280);
+					rect(5,0,490,300);
 
 					image(texFiltered,5,15,490,280);
 					updateClipGui();

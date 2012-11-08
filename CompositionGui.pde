@@ -143,15 +143,14 @@ void Composition_Load(){
 		JSONObject JSONClip = new JSONObject();
 		try {
 			JSONComposition = new JSONObject(JSONString[0]);
-			println(JSONComposition);
-			println("////////////////////////////////////");
+			// println(JSONComposition);
 			for(int i=0; i<nbLayers; i++){
 				// reset Layer
 				layers[i].resetLayer();
 
 				// load JSON
 				JSONLayer = JSONComposition.getJSONObject("Layer"+i);
-				println(JSONLayer);
+				// println("JSONLayer"+i+": "+JSONLayer);
 
 				// set loaded values
 				layers[i].duration = (float)JSONLayer.getDouble("duration");
@@ -175,9 +174,33 @@ void Composition_Load(){
 				Layer_fadeOutDuration[i].setValue(layers[i].fadeOutDuration);
 
 				int nbClips = JSONLayer.getInt("nbClips");
-				println(nbClips);
+				// println("layers["+i+"].nbClips: "+nbClips);
 				for(int j=0; j<nbClips; j++){
-
+					JSONClip = JSONLayer.getJSONObject("Clip"+j);
+					// println("JSONClip"+j+": "+JSONClip);
+					layers[i].clips.add(new Clip(this));
+					layers[i].clips.get(j).movieNum = JSONClip.getInt("movieNum");
+					layers[i].clips.get(j).duration = (float)JSONClip.getDouble("duration");
+					layers[i].clips.get(j).lectureMode = JSONClip.getInt("lectureMode");
+					layers[i].clips.get(j).nbRepeat = JSONClip.getInt("nbRepeat");
+					layers[i].clips.get(j).movieSpeed = (float)JSONClip.getDouble("movieSpeed");
+					layers[i].clips.get(j).TargetOpacity = (float)JSONClip.getDouble("TargetOpacity");
+					layers[i].clips.get(j).posX = (float)JSONClip.getDouble("posX");
+					layers[i].clips.get(j).posY = (float)JSONClip.getDouble("posY");
+					layers[i].clips.get(j).Scale = (float)JSONClip.getDouble("Scale");
+					layers[i].clips.get(j).fadeInAlpha = (float)JSONClip.getDouble("fadeInAlpha");
+					layers[i].clips.get(j).fadeInDuration = (float)JSONClip.getDouble("fadeInDuration");
+					layers[i].clips.get(j).fadeOutAlpha = (float)JSONClip.getDouble("fadeOutAlpha");
+					layers[i].clips.get(j).fadeOutDuration = (float)JSONClip.getDouble("fadeOutDuration");
+					layers[i].clips.get(j).blendMode = JSONClip.getInt("blendMode");
+					gui.addButton("Layer"+i+"Clip"+j)
+						.setPosition(10+46*j, 75)
+						.setSize(45,45)
+						.setImage(thumbnails[layers[i].clips.get(j).movieNum])
+						.setView(new ImageButton())
+						.moveTo(layerG[i])
+						;
+					layers[i].clips.get(j).setVideo();
 				}
 			}
 		}

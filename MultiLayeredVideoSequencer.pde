@@ -20,6 +20,7 @@ GLTextureFilter[] BlendModes;
 //////////////////////////////GUI
 ControlP5 gui;
 int[] updateLayerClip = {999,999};
+boolean updatingClip = false;
 
 void setup(){
 	size(1500, 800, GLConstants.GLGRAPHICS);

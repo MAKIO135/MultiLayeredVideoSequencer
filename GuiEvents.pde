@@ -3,7 +3,10 @@ void controlEvent(ControlEvent event){
 		// println(event.getGroup().getName()+" is Group");
 		/////////////////////////////////////////////////Clip Events
 		if((event.getGroup().getName()).equals("clipList")){
-			if(!event.getGroup().isOpen()) background(20);
+			if(!event.getGroup().isOpen()){
+				fill(20);
+				rect(0,0,500,300);
+			}
 		}
 	
 		else if((event.getGroup().getName()).equals("Clip_LectureMode")){
@@ -27,7 +30,7 @@ void controlEvent(ControlEvent event){
 			String s = event.getGroup().getName();
 			// println(s);
 			editLayer = int(Character.toString(s.charAt(s.length()-1)));
-			println(editLayer);
+			// println(editLayer);
 			for (int i = 0; i<nbLayers; i++){
 				if(i==editLayer){
 					layers[i].isEditLayer = true;
@@ -74,7 +77,7 @@ void controlEvent(ControlEvent event){
 				// println("Layer: "+n);
 				layers[n].isEditLayer = true;
 				updateLayerClip = new int[]{n, int(Character.toString(s.charAt(s.length()-1)))};
-				// println(updateLayerClip);
+				println("updateLayerClip: Layer"+updateLayerClip[0]+" Clip"+updateLayerClip[1]);
 				setEditClip(updateLayerClip);
 			}
 			else{
@@ -164,7 +167,7 @@ void controlEvent(ControlEvent event){
 
 void setEditClip(int[] n) {
 	// stop editClip
-	editClip.movie.stop();
+	if(editClip.movieNum!=999) editClip.movie.stop();
 	editClip.isEditClip = false;
 
 	editClip.movieNum = layers[n[0]].clips.get(n[1]).movieNum;

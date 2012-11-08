@@ -16,9 +16,9 @@ class LayerVideo{
 	float TargetOpacity=1.0;
 	float Delay=0.0;
 	float fadeInAlpha=1.0;
-	float fadeInDuration=0.1;
+	float fadeInDuration=0.0;
 	float fadeOutAlpha=1.0;
-	float fadeOutDuration=0.1;
+	float fadeOutDuration=0.0;
 
 	GLTexture tex;
 	GLTextureFilter LayerFilter;

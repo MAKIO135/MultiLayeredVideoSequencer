@@ -37,7 +37,8 @@ Made with:<br>
 
 <h3>Needing fixes:</h3>
 <li>
-	<ul>- Some videos are freezing randomly whitout error message: codecs? GLGraphics, GSVideo or GStreamer ??<br>
+	<ul>- Edit Clip/Update Clip buggy after loading Composition<br>
+	- Some videos are freezing randomly whitout error message: codecs? GLGraphics, GSVideo or GStreamer ??<br>
 	- ControlP5 Timeline not updating correctly with some videos: codecs? GLGraphics, GSVideo or GStreamer ??<br></ul>
 </li>
 
@@ -62,11 +63,6 @@ The Layer Editor allows you to edit each Layer settings like:</p>
 	- custom fade in and fade out<br>
 	- delay before playing first clip of the Layer</ul>
 </li>
-
-<h3>Needs:</h3>
-<li>
-	<ul>- method for re-editing Clip + method to update Clip</ul>
-</li>
 <br>
 <br>
 
@@ -82,6 +78,5 @@ The Layer Editor allows you to edit each Layer settings like:</p>
 
 <h3>Needs:</h3>
 <li>
-	<ul>- Layers display with blend modes<br>
-	- Load method</ul>
+	<ul>- Layers display with blend modes</ul>
 </li>
