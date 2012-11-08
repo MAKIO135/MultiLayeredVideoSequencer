@@ -38,7 +38,7 @@ Made with:<br>
 <h3>Needing fixes:</h3>
 <li>
 	<ul>- Some videos are freezing randomly whitout error message: codecs? GLGraphics, GSVideo or GStreamer ??<br>
-	- ControlP5 Timeline: Sometimes not updating correctly<br></ul>
+	- ControlP5 Timeline not updating correctly with some videos: codecs? GLGraphics, GSVideo or GStreamer ??<br></ul>
 </li>
 
 <h3>GStreamer issue</h3>
