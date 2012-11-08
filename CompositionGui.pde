@@ -62,12 +62,10 @@ void Composition_Save() {
 		int nbClips = layers[i].clips.size();
 		try{
 			JSONLayer.put("duration", layers[i].duration);
-			JSONLayer.put("timelineValue", layers[i].timelineValue);
-			JSONLayer.put("timer", layers[i].timer);
 			JSONLayer.put("posX", layers[i].posX);
 			JSONLayer.put("posY", layers[i].posY);
 			JSONLayer.put("Scale", layers[i].Scale);
-			JSONLayer.put("Opacity", layers[i].Opacity);
+			// JSONLayer.put("Opacity", layers[i].Opacity);
 			JSONLayer.put("TargetOpacity", layers[i].TargetOpacity);
 			JSONLayer.put("Delay", layers[i].Delay);
 			JSONLayer.put("fadeInAlpha", layers[i].fadeInAlpha);
@@ -136,21 +134,56 @@ void Composition_Save() {
 
 void Composition_Load(){
 	String loadPath = selectInput();// Opens file chooser
-	if (loadPath == null) {
-		// If a file was not selected
-		println("No file was selected...");
-	} else {
-		// If a file was selected, print path to file
-		println(loadPath);
+	if (loadPath != null) {
+		println(loadPath.substring(loadPath.length()-4));
+
 		String[] JSONString = loadStrings(loadPath);
-		JSONObject myJsonObject = new JSONObject();
+		JSONObject JSONComposition = new JSONObject();
+		JSONObject JSONLayer = new JSONObject();
+		JSONObject JSONClip = new JSONObject();
 		try {
-			myJsonObject = new JSONObject(JSONString[0]);
+			JSONComposition = new JSONObject(JSONString[0]);
+			println(JSONComposition);
+			println("////////////////////////////////////");
+			for(int i=0; i<nbLayers; i++){
+				// reset Layer
+				layers[i].resetLayer();
+
+				// load JSON
+				JSONLayer = JSONComposition.getJSONObject("Layer"+i);
+				println(JSONLayer);
+
+				// set loaded values
+				layers[i].duration = (float)JSONLayer.getDouble("duration");
+				Layer_Duration[i].setText("DURATION: "+layers[i].duration);
+				layers[i].posX = (float)JSONLayer.getDouble("posX");
+				layers[i].posY = (float)JSONLayer.getDouble("posY");
+				Layer_XY[i].setArrayValue(new float[]{100,100});
+				layers[i].Scale = (float)JSONLayer.getDouble("Scale");
+				Layer_Scale[i].setValue(layers[i].Scale);
+				layers[i].TargetOpacity = (float)JSONLayer.getDouble("TargetOpacity");
+				Layer_Opacity[i].setValue(layers[i].TargetOpacity);
+				layers[i].Delay = (float)JSONLayer.getDouble("Delay");
+				Layer_Delay[i].setValue(layers[i].Delay);
+				layers[i].fadeInAlpha = (float)JSONLayer.getDouble("fadeInAlpha");
+				Layer_fadeInAlpha[i].setValue(layers[i].fadeInAlpha);
+				layers[i].fadeInDuration = (float)JSONLayer.getDouble("fadeInDuration");
+				Layer_fadeInDuration[i].setValue(layers[i].fadeInDuration);
+				layers[i].fadeOutAlpha = (float)JSONLayer.getDouble("fadeOutAlpha");
+				Layer_fadeOutAlpha[i].setValue(layers[i].fadeOutAlpha);
+				layers[i].fadeOutDuration = (float)JSONLayer.getDouble("fadeOutDuration");
+				Layer_fadeOutDuration[i].setValue(layers[i].fadeOutDuration);
+
+				int nbClips = JSONLayer.getInt("nbClips");
+				println(nbClips);
+				for(int j=0; j<nbClips; j++){
+
+				}
+			}
 		}
 		catch(JSONException e) {
 			e.getCause();
 		}
-		println(myJsonObject);
 	}
 }
 /*

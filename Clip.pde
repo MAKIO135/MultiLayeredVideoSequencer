@@ -56,7 +56,8 @@ class Clip{
 		tex.setPixelBufferSize(10);
 		tex.delPixelsWhenBufferFull(false);
 
-		movie.play();
+		if(lectureMode == 0) movie.loop();
+		else movie.play();
 		while(movie.width<1){
 			movie.volume(0.0);
 		}
@@ -109,19 +110,24 @@ class Clip{
 	void checkLoop() {
 		// check at Beginning
 		if(addLectureSwitch && movie.frame()<=2*max(1,movieSpeed)){
-			movie.speed(movieSpeed);
-			nbLecture++;
+			if(lectureMode==1){
+				nbLecture++;
+				movie.speed(movieSpeed);
+			}
 			addLectureSwitch=false;
 		}
 		// check at end
 		else if(movie.length()-movie.frame()<=2*max(1,movieSpeed)){
 			// lectureMode: loop
 			if(lectureMode==0){
-				movie.goToBeginning();
-				movie.pause();
-				movie.speed(movieSpeed);
-				movie.play();
-				nbLecture++;
+				// movie.goToBeginning();
+				// movie.pause();
+				// movie.speed(movieSpeed);
+				// movie.play();
+				if(!addLectureSwitch){
+					nbLecture++;
+					addLectureSwitch=true;
+				}
 			}
 
 			// lectureMode: play/playback

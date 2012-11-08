@@ -14,6 +14,8 @@ Slider Clip_Opacity;
 DropdownList Clip_Effect;
 DropdownList Add_to_Layer;
 int addTo=0;
+Button Update_Clip;
+Textlabel Update_ClipId;
 
 class ImageButton implements ControllerView<Button> {
 	PImage img = thumbnails[currentButton];
@@ -215,6 +217,19 @@ void initClipGui() {
 			;
 			Clip_fadeOutDuration.getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
 
+		Update_Clip = gui.addButton("Update_Clip")
+			.setPosition(375,440)
+			.setSize(100,10)
+			.moveTo(clipGui)
+			;
+			Update_Clip.getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
+
+		Update_ClipId = gui.addTextlabel("Update_ClipId")
+			.setText("LAYER_ CLIP_")
+			.setPosition(371,466)
+			.moveTo(clipGui)
+			;
+
 		Add_to_Layer = gui.addDropdownList("Add_to_Layer")
 			.setPosition(295,420)
 			.setSize(120,50)
@@ -319,7 +334,7 @@ void Add_Clip(){
 
 		layers[addTo].clips.add(c);
 
-		gui.addButton("Layer"+addTo+"Clip"+layers[addTo].clips.size())
+		gui.addButton("Layer"+addTo+"Clip"+(layers[addTo].clips.size()-1))
 			.setPosition(10+46*(layers[addTo].clips.size()-1), 75)
 			.setSize(45,45)
 			.setImage(thumbnails[c.movieNum])
@@ -337,5 +352,30 @@ void Add_Clip(){
 			composition.duration = layers[addTo].duration;
 			Composition_Duration.setText("DURATION: "+composition.duration);
 		}
+	}
+}
+
+void Update_Clip(){
+	if(updateLayerClip[0] != 999){
+		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).movie.stop();
+		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).movieNum = editClip.movieNum;
+		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).duration = editClip.duration;
+		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).lectureMode = editClip.lectureMode;
+		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).nbRepeat = editClip.nbRepeat;
+		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).movieSpeed = editClip.movieSpeed;
+		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).TargetOpacity = editClip.TargetOpacity;
+		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).posX = editClip.posX;
+		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).posY = editClip.posY;
+		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).Scale = editClip.Scale;
+		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).fadeInAlpha = editClip.fadeInAlpha;
+		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).fadeInAlphaStep = editClip.fadeInAlphaStep;
+		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).fadeInDuration = editClip.fadeInDuration;
+		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).fadeOutAlpha = editClip.fadeOutAlpha;
+		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).fadeOutAlphaStep = editClip.fadeOutAlphaStep;
+		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).fadeOutDuration = editClip.fadeOutDuration;
+		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).blendMode = editClip.blendMode;
+		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).setVideo();
+		updateLayerClip = new int[]{999,999};
+		Update_ClipId.setText("LAYER_ CLIP_");
 	}
 }

@@ -1,6 +1,7 @@
 Group[] layerG;
 Slider[] Layer_Timeline;
 Textlabel[] Layer_Duration;
+Toggle[] Layer_PlayPause;
 Slider2D[] Layer_XY;
 Slider[] Layer_Scale;
 Slider[] Layer_Opacity;
@@ -14,6 +15,7 @@ void initLayerGui(){
 	layerG = new Group[nbLayers];
 	Layer_Timeline = new Slider[nbLayers];
 	Layer_Duration = new Textlabel[nbLayers];
+	Layer_PlayPause = new Toggle[nbLayers];
 	Layer_XY = new Slider2D[nbLayers];
 	Layer_Scale = new Slider[nbLayers];
 	Layer_Opacity = new Slider[nbLayers];
@@ -62,7 +64,7 @@ void initLayerGui(){
 				.setId(1)
 				;
 
-			gui.addToggle("Layer_PlayPause"+n)
+			Layer_PlayPause[n] = gui.addToggle("Layer_PlayPause"+n)
 				.setPosition(10,40)
 				.setSize(80,10)
 				.moveTo(layerG[n])

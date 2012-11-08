@@ -19,7 +19,7 @@ GLTextureFilter[] BlendModes;
 
 //////////////////////////////GUI
 ControlP5 gui;
-
+int[] updateLayerClip = {999,999};
 
 void setup(){
 	size(1500, 800, GLConstants.GLGRAPHICS);
@@ -64,5 +64,10 @@ void movieEvent(GSMovie movie) {
 
 // used for debug
 void keyPressed(){
-	println(editClip.movieSpeed);
+	if(key=='r' || key=='R'){
+		composition.isPlaying=false;
+		for (int i = 0; i<nbLayers; i++){
+			layers[i].resetLayer();
+		}
+	}
 }

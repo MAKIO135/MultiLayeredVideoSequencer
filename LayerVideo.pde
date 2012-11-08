@@ -15,12 +15,11 @@ class LayerVideo{
 	float Opacity=0.0;
 	float TargetOpacity=1.0;
 	float Delay=0.0;
-	float fadeInAlpha;
-	float fadeInDuration;
-	float fadeOutAlpha;
-	float fadeOutDuration;
+	float fadeInAlpha=1.0;
+	float fadeInDuration=0.1;
+	float fadeOutAlpha=1.0;
+	float fadeOutDuration=0.1;
 
-	boolean setTexture = true;
 	GLTexture tex;
 	GLTextureFilter LayerFilter;
 
@@ -101,5 +100,45 @@ class LayerVideo{
 		}
 		else Opacity = TargetOpacity;
 		LayerFilter.setParameterValue("Opacity", Opacity);
+	}
+
+	void resetLayer(){
+		isPlaying = false;
+		Layer_PlayPause[id].setValue(0.0);
+		isEditLayer = false;
+		currentClip = 0;
+		duration = 0.0;
+		Layer_Duration[id].setText("DURATION: 0.0");
+		timelineValue = 0.0;
+		Layer_Timeline[id].setValue(0.0);
+		timer = 0.0;
+		posX=0;
+		posY=0;
+		Layer_XY[id].setArrayValue(new float[]{100,100});
+		Scale=1.0;
+		Layer_Scale[id].setValue(1.0);
+		Opacity=0.0;
+		TargetOpacity=1.0;
+		Layer_Opacity[id].setValue(1.0);
+		Delay=0.0;
+		Layer_Delay[id].setValue(0.0);
+		fadeInAlpha=1.0;
+		Layer_fadeInAlpha[id].setValue(1.0);
+		fadeInDuration=0.1;
+		Layer_fadeInDuration[id].setValue(0.1);
+		fadeOutAlpha=1.0;
+		Layer_fadeOutAlpha[id].setValue(1.0);
+		fadeOutDuration=0.1;
+		Layer_fadeOutDuration[id].setValue(0.1);
+		for(int i = clips.size()-1; i>=0; i--){
+			clips.get(i).movie.stop();
+			clips.get(i).texFiltered.delete();
+			clips.get(i).tex.delete();
+			clips.get(i).ClipFilter.delete();
+			clips.remove(i);
+			gui.remove("Layer"+id+"Clip"+i);
+		}
+		fill(20);
+		rect(505,15,490,280);
 	}
 }
