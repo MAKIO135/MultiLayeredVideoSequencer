@@ -8,7 +8,7 @@ Made with:<br>
 	JSON4Processing 1.3.1: <a href="https://github.com/MAKIO135/JSON-processing">https://github.com/MAKIO135/JSON-processing</a></ul>
 </li>
 <p>Videos used in the demo are from <a href="http://www.beeple-crap.com/vjclips.php">Beeple</a></p>
-<h3>This project is under developpement.<br>Help welcome.</h3>
+<h3>This project is under developpement.</h3>
 <img src="http://makio.free.fr/divers/Github/VideoSequencer.jpg">
 <br>
 <p>First, add your videos inside /data/videos folder. It will automatically create playlist and check if thumbnails exist or need to be created.<br>The Sequencer works in 3 steps/parts:</p>
@@ -35,10 +35,9 @@ Made with:<br>
 	- choice of VideoLayer to add the clip to</ul>
 </li>
 
-<h3>Needing fixes:</h3>
+<h3>Needing reviews:</h3>
 <li>
-	<ul>- Edit Clip/Update Clip buggy after loading Composition<br>
-	- Some videos are freezing randomly whitout error message: codecs? GLGraphics, GSVideo or GStreamer ??<br>
+	<ul>- Some videos are freezing randomly whitout error message: codecs? GLGraphics, GSVideo or GStreamer ??<br>
 	- ControlP5 Timeline not updating correctly with some videos: codecs? GLGraphics, GSVideo or GStreamer ??<br></ul>
 </li>
 
@@ -71,12 +70,7 @@ The Layer Editor allows you to edit each Layer settings like:</p>
 <img src="http://makio.free.fr/divers/Github/VideoSequencerPart3.png" alt="Video Sequencer Part 3"><br>
 <p></p>
 
-<h3>Needing fixes:</h3>
+<h3>Needing reviews:</h3>
 <li>
 	<ul>-GLSL BlendModes behavior regarding Opacity of the 2 Layers mixed</ul>
-</li>
-
-<h3>Needs:</h3>
-<li>
-	<ul>- Layers display with blend modes</ul>
 </li>

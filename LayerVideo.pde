@@ -48,24 +48,26 @@ class LayerVideo{
 				updateLayerGui();
 			}
 			
+			// jump to next clip or end Layer
 			if((clips.get(currentClip)).ended){
 				println("Layer"+id+".currentClip: "+currentClip+" ended");
 				if(isEditLayer){
 					float timelineValueUp=0.0;
 					for (int i = 0; i<= currentClip; i++){
-						timelineValueUp += ((clips.get(i)).duration*(clips.get(i)).nbRepeat)/(clips.get(i)).movieSpeed;
+						timelineValueUp += clips.get(i).duration;
 					}
 					timelineValue = timelineValueUp;
 				}
 
 				currentClip++;
 				if(currentClip<clips.size()){
-					println("Layer"+id+".currentClip: "+currentClip);
-					(clips.get(currentClip)).movie.play();
+					// println("Layer"+id+".currentClip: "+currentClip);
+					clips.get(currentClip).movie.play();
+					clips.get(currentClip).timer = millis();
 				}
 				else{
 					// gui.getController("Layer_PlayPause"+id).setValue(0.0);// problem with controlp5
-					println("Layer"+id+" ended");
+					// println("Layer"+id+" ended");
 					isPlaying = false;
 
 					// restart clips
@@ -104,6 +106,7 @@ class LayerVideo{
 
 	void resetLayer(){
 		isPlaying = false;
+		timelineValue = 0.0;
 		Layer_PlayPause[id].setValue(0.0);
 		isEditLayer = false;
 		currentClip = 0;

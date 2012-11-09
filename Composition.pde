@@ -27,7 +27,7 @@ class Composition{
 					layers[i].currentClip=0;
 					// re init layers clips
 					for(int j = 0; j<layers[i].clips.size(); j++){
-						(layers[i].clips).get(i).ended = false;
+						(layers[i].clips).get(j).ended = false;
 					}
 				}
 				initialize=false;
@@ -47,13 +47,12 @@ class Composition{
 					}
 					else{
 						bottom = i;
+						BlendModes[layers[top].clips.get(layers[top].currentClip).blendMode].setParameterValue("Opacity", layers[top].Opacity);
 						if(firstBlend){
 							firstBlend = false;
-							println("top: "+top);
-							println("layers[top].currentClip: "+layers[top].currentClip);
-							println("bottom: "+bottom);
-							println("layers[bottom].currentClip: "+layers[bottom].currentClip);
-							println("blendMode: "+layers[top].clips.get(layers[top].currentClip).blendMode);
+							// println("top: layers["+top+"].currentClip: "+layers[top].currentClip);
+							// println("bottom: layers["+bottom+"].currentClip: "+layers[bottom].currentClip);
+							// println("blendMode: "+layers[top].clips.get(layers[top].currentClip).blendMode);
 							BlendModes[layers[top].clips.get(layers[top].currentClip).blendMode].apply(new GLTexture[]{layers[top].tex, layers[bottom].tex}, tex[bottom]);
 						}
 						else{
@@ -68,11 +67,16 @@ class Composition{
 				}
 			}
 			if(top!=999 && bottom!=999){
+				// println("Composition.get mixed tex:"+bottom);
 				image(tex[bottom],1005,15,490,280);
 			}
-			else if(top!=999) image(layers[top].tex,1005,15,490,280);
-			top=999;
-			bottom=999;
+			else if(top!=999){
+				// println("Composition.get one tex:"+top);
+				image(layers[top].tex,1005,15,490,280);
+			}
+			top = 999;
+			bottom = 999;
+			firstBlend = true;
 
 			updateCompositionGui();
 		}

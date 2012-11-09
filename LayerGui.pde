@@ -10,6 +10,7 @@ Slider[] Layer_fadeInAlpha;
 Slider[] Layer_fadeInDuration;
 Slider[] Layer_fadeOutAlpha;
 Slider[] Layer_fadeOutDuration;
+Button[] Layer_Reset;
 
 void initLayerGui(){
 	layerG = new Group[nbLayers];
@@ -24,6 +25,7 @@ void initLayerGui(){
 	Layer_fadeInDuration = new Slider[nbLayers];
 	Layer_fadeOutAlpha = new Slider[nbLayers];
 	Layer_fadeOutDuration = new Slider[nbLayers];
+	Layer_Reset = new Button[nbLayers];
 	
 	Group layerGui = gui.addGroup("Layer")
 		.setBackgroundColor(color(0))
@@ -44,7 +46,7 @@ void initLayerGui(){
 		for (int n = nbLayers-1; n>=0; n--){
 			layerG[n] = gui.addGroup("Layer"+n)
 				.setWidth(490)
-				.setBackgroundHeight(370)
+				.setBackgroundHeight(390)
 				.activateEvent(true)
 				;
 
@@ -159,6 +161,14 @@ void initLayerGui(){
 				.moveTo(layerG[n])
 				;
 				Layer_fadeOutDuration[n].getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
+
+			Layer_Reset[n] = gui.addButton("Layer_Reset"+n)
+				.setPosition(400,40)
+				.setSize(80,10)
+				.setId(11)
+				.moveTo(layerG[n])
+				;
+				Layer_Reset[n].getCaptionLabel().align(ControlP5.RIGHT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
 
 			// add to accordion
 			LayersGui.addItem(layerG[n]);

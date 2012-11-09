@@ -1,3 +1,36 @@
+/*
+ * 	    __  ___      __   _      ________ ______
+ * 	   /  |/  /___ _/ /__(_)___ <  /__  // ____/
+ * 	  / /|_/ / __ `/ //_/ / __ \/ / /_ </___ \  
+ * 	 / /  / / /_/ / ,< / / /_/ / /___/ /___/ /  
+ * 	/_/  /_/\__,_/_/|_/_/\____/_//____/_____/   
+ * 
+ * 	Multi Layered Video Sequencer
+ * 	by Lionel Radisson // MAKIO135
+ *	http://makio135.com/
+ *
+ *
+ * This file is part of the Multi Layered Video Sequencer application.
+ * @author Lionel Radisson // Makio135
+ *
+ * Copyright (c) 2012 Lionel Radisson // Makio135
+ *
+ * This source is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This code is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ * 
+ * A copy of the GNU General Public License is available on the World
+ * Wide Web at <http://www.gnu.org/copyleft/gpl.html>. You can also
+ * obtain it by writing to the Free Software Foundation,
+ * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
 import processing.opengl.*;
 import codeanticode.glgraphics.*;
 import codeanticode.gsvideo.*;
@@ -63,12 +96,15 @@ void movieEvent(GSMovie movie) {
 	movie.read();
 }
 
-// used for debug
 void keyPressed(){
-	if(key=='r' || key=='R'){
-		composition.isPlaying=false;
-		for (int i = 0; i<nbLayers; i++){
-			layers[i].resetLayer();
-		}
+	if(key=='l' || key=='L'){
+		loadComp("data/Compositions/Composition_20121109-022621.json");
+		// Composition_Load();
+	}
+	else if(key=='s' || key=='S'){
+		Composition_Save();
+	}
+	else if(key=='r' || key=='R'){
+		Composition_Reset();
 	}
 }

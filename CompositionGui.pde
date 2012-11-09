@@ -2,6 +2,8 @@ Slider Composition_Timeline;
 Textlabel Composition_Duration;
 Button Composition_Save;
 Button Composition_Load;
+Button Composition_Reset;
+
 void initCompositionGui(){
 	Group compositionGui = gui.addGroup("Composition")
 		.setBackgroundColor(color(0))
@@ -31,6 +33,13 @@ void initCompositionGui(){
 		.moveTo(compositionGui)
 		;
 
+	Composition_Reset = gui.addButton("Composition_Reset")
+		.setPosition(400,40)
+		.setSize(80,10)
+		.moveTo(compositionGui)
+		;
+		Composition_Reset.getCaptionLabel().align(ControlP5.RIGHT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
+
 	Composition_Save = gui.addButton("Composition_Save")
 		.setPosition(10,100)
 		.setSize(80,10)
@@ -54,6 +63,7 @@ void Composition_PlayPause(boolean b){
 	composition.timer = millis();
 }
 
+// quick access 's' || 'S'
 void Composition_Save() {
 	println("exporting");
 	JSONObject JSONExport = new JSONObject();
@@ -134,8 +144,7 @@ void Composition_Save() {
 
 void Composition_Load(){
 	String loadPath = selectInput();// Opens file chooser
-	if (loadPath != null) {
-		println(loadPath.substring(loadPath.length()-4));
+	if (loadPath != null && loadPath.substring(loadPath.length()-4).equals("json")) {
 
 		String[] JSONString = loadStrings(loadPath);
 		JSONObject JSONComposition = new JSONObject();
@@ -207,13 +216,104 @@ void Composition_Load(){
 		catch(JSONException e) {
 			e.getCause();
 		}
+
+		for(int i=0; i<nbLayers; i++){
+			if(layers[i].duration>composition.duration) composition.duration = layers[i].duration;
+		}
+		Composition_Duration.setText("DURATION: "+composition.duration);
+		Composition_Timeline.setRange(0.0, composition.duration);
+		Composition_Timeline.setValue(0.0);
+		Composition_Timeline.getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
 	}
 }
-/*
-try{
 
+// quick access 'r' || 'R'
+void Composition_Reset(){
+	composition.isPlaying=false;
+	for (int i = 0; i<nbLayers; i++){
+		layers[i].resetLayer();
+	}
 }
-catch(JSONException e) {
-	e.getCause();
+
+// a quick loading method for debug :: access by press 'l' || 'L'
+// specify json file path in KeyPressed method
+void loadComp(String loadPath){
+	String[] JSONString = loadStrings(loadPath);
+	JSONObject JSONComposition = new JSONObject();
+	JSONObject JSONLayer = new JSONObject();
+	JSONObject JSONClip = new JSONObject();
+	try {
+		JSONComposition = new JSONObject(JSONString[0]);
+		// println(JSONComposition);
+		for(int i=0; i<nbLayers; i++){
+			// reset Layer
+			layers[i].resetLayer();
+
+			// load JSON
+			JSONLayer = JSONComposition.getJSONObject("Layer"+i);
+			// println("JSONLayer"+i+": "+JSONLayer);
+
+			// set loaded values
+			layers[i].duration = (float)JSONLayer.getDouble("duration");
+			Layer_Duration[i].setText("DURATION: "+layers[i].duration);
+			layers[i].posX = (float)JSONLayer.getDouble("posX");
+			layers[i].posY = (float)JSONLayer.getDouble("posY");
+			Layer_XY[i].setArrayValue(new float[]{100,100});
+			layers[i].Scale = (float)JSONLayer.getDouble("Scale");
+			Layer_Scale[i].setValue(layers[i].Scale);
+			layers[i].TargetOpacity = (float)JSONLayer.getDouble("TargetOpacity");
+			Layer_Opacity[i].setValue(layers[i].TargetOpacity);
+			layers[i].Delay = (float)JSONLayer.getDouble("Delay");
+			Layer_Delay[i].setValue(layers[i].Delay);
+			layers[i].fadeInAlpha = (float)JSONLayer.getDouble("fadeInAlpha");
+			Layer_fadeInAlpha[i].setValue(layers[i].fadeInAlpha);
+			layers[i].fadeInDuration = (float)JSONLayer.getDouble("fadeInDuration");
+			Layer_fadeInDuration[i].setValue(layers[i].fadeInDuration);
+			layers[i].fadeOutAlpha = (float)JSONLayer.getDouble("fadeOutAlpha");
+			Layer_fadeOutAlpha[i].setValue(layers[i].fadeOutAlpha);
+			layers[i].fadeOutDuration = (float)JSONLayer.getDouble("fadeOutDuration");
+			Layer_fadeOutDuration[i].setValue(layers[i].fadeOutDuration);
+
+			int nbClips = JSONLayer.getInt("nbClips");
+			// println("layers["+i+"].nbClips: "+nbClips);
+			for(int j=0; j<nbClips; j++){
+				JSONClip = JSONLayer.getJSONObject("Clip"+j);
+				// println("JSONClip"+j+": "+JSONClip);
+				layers[i].clips.add(new Clip(this));
+				layers[i].clips.get(j).movieNum = JSONClip.getInt("movieNum");
+				layers[i].clips.get(j).duration = (float)JSONClip.getDouble("duration");
+				layers[i].clips.get(j).lectureMode = JSONClip.getInt("lectureMode");
+				layers[i].clips.get(j).nbRepeat = JSONClip.getInt("nbRepeat");
+				layers[i].clips.get(j).movieSpeed = (float)JSONClip.getDouble("movieSpeed");
+				layers[i].clips.get(j).TargetOpacity = (float)JSONClip.getDouble("TargetOpacity");
+				layers[i].clips.get(j).posX = (float)JSONClip.getDouble("posX");
+				layers[i].clips.get(j).posY = (float)JSONClip.getDouble("posY");
+				layers[i].clips.get(j).Scale = (float)JSONClip.getDouble("Scale");
+				layers[i].clips.get(j).fadeInAlpha = (float)JSONClip.getDouble("fadeInAlpha");
+				layers[i].clips.get(j).fadeInDuration = (float)JSONClip.getDouble("fadeInDuration");
+				layers[i].clips.get(j).fadeOutAlpha = (float)JSONClip.getDouble("fadeOutAlpha");
+				layers[i].clips.get(j).fadeOutDuration = (float)JSONClip.getDouble("fadeOutDuration");
+				layers[i].clips.get(j).blendMode = JSONClip.getInt("blendMode");
+				gui.addButton("Layer"+i+"Clip"+j)
+					.setPosition(10+46*j, 75)
+					.setSize(45,45)
+					.setImage(thumbnails[layers[i].clips.get(j).movieNum])
+					.setView(new ImageButton())
+					.moveTo(layerG[i])
+					;
+				layers[i].clips.get(j).setVideo();
+			}
+		}
+	}
+	catch(JSONException e) {
+		e.getCause();
+	}
+
+	for(int i=0; i<nbLayers; i++){
+		if(layers[i].duration>composition.duration) composition.duration = layers[i].duration;
+	}
+	Composition_Duration.setText("DURATION: "+composition.duration);
+	Composition_Timeline.setRange(0.0, composition.duration);
+	Composition_Timeline.setValue(0.0);
+	Composition_Timeline.getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
 }
-*/

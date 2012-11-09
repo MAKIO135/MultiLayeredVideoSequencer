@@ -1,6 +1,7 @@
 void controlEvent(ControlEvent event){
 	if(event.isGroup()){
 		// println(event.getGroup().getName()+" is Group");
+
 		/////////////////////////////////////////////////Clip Events
 		if((event.getGroup().getName()).equals("clipList")){
 			if(!event.getGroup().isOpen()){
@@ -45,6 +46,7 @@ void controlEvent(ControlEvent event){
 
 	else if (event.isController()){
 		// println(event.getController().getName()+" is Controller");
+
 		/////////////////////////////////////////////////Clips Events
 		if((event.getController().getName()).equals("Clip_XY")){
 			if(editClip != null){
@@ -58,6 +60,8 @@ void controlEvent(ControlEvent event){
 			for(int i=0; i<Playlist.length; i++){
 				if((event.getController().getName()).equals("Clip"+i)){
 					gui.getGroup("clipList").close();
+					fill(20);
+					rect(0,0,500,300);
 					editClip.movieNum=i;
 					editClip.isLoaded=false;
 					editClip.setVideo();
@@ -78,6 +82,9 @@ void controlEvent(ControlEvent event){
 				layers[n].isEditLayer = true;
 				updateLayerClip = new int[]{n, int(Character.toString(s.charAt(s.length()-1)))};
 				println("updateLayerClip: Layer"+updateLayerClip[0]+" Clip"+updateLayerClip[1]);
+				if(gui.getGroup("clipList").isOpen()) gui.getGroup("clipList").close();
+				fill(20);
+				rect(0,0,500,300);
 				setEditClip(updateLayerClip);
 			}
 			else{
@@ -96,15 +103,10 @@ void controlEvent(ControlEvent event){
 					case(2): // Layer_PlayPause
 						if(layers[n].clips.size()>0 && !composition.isPlaying){
 							layers[n].isPlaying = boolean(int(event.controller().value()));
-							println("//////////////////////////////");
 							if(layers[n].isPlaying){
-								if(!(layers[n].clips).get(layers[n].currentClip).movie.isPlaying()){// if layer.currentClip is not playing -> play
-									if((layers[n].clips).get(layers[n].currentClip).lectureMode==0){
-										(layers[n].clips).get(layers[n].currentClip).movie.play();
-									}
-									else if((layers[n].clips).get(layers[n].currentClip).lectureMode==1){
-										(layers[n].clips).get(layers[n].currentClip).movie.loop();
-									}
+								if(!layers[n].clips.get(layers[n].currentClip).movie.isPlaying()){
+									layers[n].clips.get(layers[n].currentClip).movie.play();
+									layers[n].clips.get(layers[n].currentClip).timer=millis();
 								}
 								layers[n].timer = millis();
 							}
@@ -159,6 +161,9 @@ void controlEvent(ControlEvent event){
 						layers[n].fadeOutDuration = event.controller().value();
 						// println("layers["+n+"].fadeOutDuration: "+layers[n].fadeOutDuration);
 						break;
+					case(11):
+						layers[n].resetLayer();
+						break;
 				}
 			}
 		}
@@ -192,7 +197,6 @@ void setEditClip(int[] n) {
 	Clip_LectureMode.setIndex(editClip.lectureMode);
 	Clip_nbRepeat.setValue(editClip.nbRepeat);
 	Clip_Speed.setValue(editClip.movieSpeed);
-
 	Clip_XY.setArrayValue(new float[]{map(editClip.posX,-1,1,0,200), map(editClip.posY,-1,1,0,200)});
 	Clip_Scale.setValue(editClip.Scale);
 	Clip_fadeInAlpha.setValue(editClip.fadeInAlpha);

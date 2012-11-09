@@ -21,10 +21,8 @@ class Clip{
 	float posX=0, posY=0;
 	float Scale=1.0;
 	float fadeInAlpha=1.0;
-	float fadeInAlphaStep;
 	float fadeInDuration=0.0;
 	float fadeOutAlpha=1.0;
-	float fadeOutAlphaStep;
 	float fadeOutDuration=0.0;
 	int blendMode=0;
 
@@ -39,13 +37,13 @@ class Clip{
 
 	void setVideo(){
 		isLoaded = false;
-		// check if a movie is loaded and delete it
+		// check if a movie was already loaded and delete it
 		if(movie != null){
 			movie.stop();
 			movie.delete();
 			tex.delete();
 			texFiltered.delete();
-			println("Movie deleted");
+			// println("Movie deleted");
 		}
 
 		// load movie and set Texture
@@ -61,13 +59,8 @@ class Clip{
 		while(movie.width<1){
 			movie.volume(0.0);
 		}
+
 		movie.goToBeginning();
-		// calculs for fadeIn & fadeOut
-		Opacity = fadeInAlpha;
-		fadeInAlphaStep = (TargetOpacity - fadeInAlpha)/(fadeInDuration*movie.getSourceFrameRate());
-		// println(fadeInAlphaStep);
-		fadeOutAlphaStep = (TargetOpacity - fadeOutAlpha)/(fadeOutDuration*movie.getSourceFrameRate());
-		// println(fadeOutAlphaStep);
 		if(isEditClip){
 			gui.getController("Clip_PlayPause").setValue(1.0);
 			Clip_Timeline.setValue(0);
@@ -76,13 +69,14 @@ class Clip{
 			movie.pause();
 		}
 
+		Opacity = fadeInAlpha;
 		movie.speed(movieSpeed);
-		duration = movie.duration();
+		duration = movie.duration()*nbRepeat/movieSpeed;
 		isLoaded=true;
 	}
 
 	void display(){
-		if(isLoaded && movie.ready()){
+		if(isLoaded && movie.isPlaying()){
 			if(lectureMode == 0) movie.speed(movieSpeed);
 			if (tex.putPixelsIntoTexture()) {
 				updateGLSLParams();
@@ -91,9 +85,10 @@ class Clip{
 
 				// display editClip in editor
 				if(isEditClip){
+					duration = movie.duration()*nbRepeat/movieSpeed;
 					// due to Clip alpha, we need to "erase" previous frame
 					fill(20);
-					rect(5,0,490,300);
+					rect(5,15,490,280);
 
 					image(texFiltered,5,15,490,280);
 					updateClipGui();
@@ -106,8 +101,11 @@ class Clip{
 	}
 	
 	void checkLoop() {
+		timelineValue += (millis()-timer)/1000;
+		timer = millis();
+
 		// check at Beginning
-		if(addLectureSwitch && movie.frame()<=2*max(1,movieSpeed)){
+		if(addLectureSwitch && movie.time()<.05*max(1,movieSpeed)){
 			if(lectureMode==1){
 				nbLecture++;
 				movie.speed(movieSpeed);
@@ -115,16 +113,15 @@ class Clip{
 			addLectureSwitch=false;
 		}
 		// check at end
-		else if(movie.length()-movie.frame()<=2*max(1,movieSpeed)){
+		else if(movie.duration()-movie.time()<.05*max(1,movieSpeed)){
 			// lectureMode: loop
 			if(lectureMode==0){
-				// movie.goToBeginning();
-				// movie.pause();
-				// movie.speed(movieSpeed);
-				// movie.play();
 				if(!addLectureSwitch){
 					nbLecture++;
 					addLectureSwitch=true;
+					movie.speed(movieSpeed+1);
+					movie.goToBeginning();
+					movie.speed(movieSpeed);
 				}
 			}
 
@@ -134,32 +131,45 @@ class Clip{
 				addLectureSwitch=true;
 				movie.speed(-movieSpeed);
 			}
-		}// end check loop/playback/stop
+		}
 
-		if(nbLecture > nbRepeat && !isEditClip){
-			println("nbLecture: "+nbLecture);
-			println("nbRepeat: "+nbRepeat);
-			ended = true;
+		if(nbLecture > nbRepeat || timelineValue>duration){
+			// println("Clip end");
 			nbLecture = 1;
-			movie.goToBeginning();
-			movie.pause();
 			addLectureSwitch=false;
+			Opacity = fadeInAlpha;
+			movie.speed(movieSpeed+1);
+			movie.goToBeginning();
+			movie.speed(movieSpeed);
+			timelineValue=0.0;
+			addLectureSwitch=false;
+			if(!isEditClip){
+				// println("nbLecture: "+nbLecture+"  nbRepeat: "+nbRepeat);
+				ended = true;
+				movie.pause();
+			}
 		}
 	}
 
 	void updateGLSLParams(){
+		Opacity = TargetOpacity;
+		if(timelineValue<fadeInDuration){
+			// println("fadeIn");
+			Opacity = fadeInAlpha+timelineValue*((TargetOpacity-fadeInAlpha)/fadeInDuration);
+		}
+		else if( timelineValue>duration-fadeOutDuration){
+			// println("fadeOut");
+			Opacity = fadeOutAlpha+(duration-timelineValue)*((TargetOpacity-fadeOutAlpha)/fadeOutDuration);
+		}
+		ClipFilter.setParameterValue("Opacity", Opacity);
 		ClipFilter.setParameterValue("posXY", new float[] {posX, posY});
 		ClipFilter.setParameterValue("Scale", Scale);
-		if(nbLecture==1 && TargetOpacity-Opacity>.1 && movie.time()<fadeInDuration) Opacity += fadeInAlphaStep;
-		else if(nbLecture==nbRepeat && movie.duration()-movie.time()<fadeOutDuration) Opacity -= fadeOutAlphaStep;// depends on playMode
-		else Opacity = TargetOpacity;
-		ClipFilter.setParameterValue("Opacity", Opacity);
 	}
 
 	void updateClipGui(){
 		Clip_Timeline.setRange(0.0, duration);
-		Clip_Timeline.setValue(movie.time());
+		Clip_Timeline.setValue(timelineValue);
 		Clip_Timeline.getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE).setPaddingX(0);
-		Clip_Duration.setText("DURATION: "+duration*nbRepeat/movieSpeed);
+		Clip_Duration.setText("DURATION: "+duration);
 	}
 }

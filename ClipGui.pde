@@ -156,6 +156,8 @@ void initClipGui() {
 			.moveTo(clipGui)
 			;
 
+			/*
+			//English Version
 			Clip_Effect.addItem( "Normal (Unpremultiplied, Photo Mask)", 0 );
 			Clip_Effect.addItem( "Normal (Premultiplied, CG Alpha)", 1 );
 			Clip_Effect.addItem( "Color", 2 );
@@ -174,6 +176,27 @@ void initClipGui() {
 			Clip_Effect.addItem( "SoftLight", 15 );
 			Clip_Effect.addItem( "Overlay", 16 );
 			Clip_Effect.addItem( "HardLight", 17 );
+			*/
+
+			//French Version
+			Clip_Effect.addItem( "Normal (Unpremultiplied, Photo Mask)", 0 );
+			Clip_Effect.addItem( "Normal (Premultiplied, CG Alpha)", 1 );
+			Clip_Effect.addItem( "Couleur", 2 );// Color
+			Clip_Effect.addItem( "Luminance", 3 );// ?
+			Clip_Effect.addItem( "Produit", 4 );// Multiply
+			Clip_Effect.addItem( "Difference", 5 );// Subtract
+			Clip_Effect.addItem( "Densite Lineaire -", 6 );// Linear Dodge (Add)
+			Clip_Effect.addItem( "Densite Couleur -", 7 );// ColorDodge
+			Clip_Effect.addItem( "Densite Couleur +", 8 );// ColorBurn
+			Clip_Effect.addItem( "Obscurcir", 9 );// Darken
+			Clip_Effect.addItem( "Eclaircir", 10 );// Lighten
+			Clip_Effect.addItem( "Difference", 11 );// Difference
+			Clip_Effect.addItem( "InverseDifference", 12 );// ?
+			Clip_Effect.addItem( "Exclusion", 13 );// Exclusion
+			Clip_Effect.addItem( "Superposition", 14 );// Screen
+			Clip_Effect.addItem( "Lumière Tamisee", 15 );// SoftLight
+			Clip_Effect.addItem( "Incrustation", 16 );// Overlay
+			Clip_Effect.addItem( "Lumière Crue", 17 );// HardLight
 
 			Clip_Effect.setIndex(0);
 
@@ -279,6 +302,7 @@ void Clip_Speed(float f){
 	editClip.movieSpeed = f;
 	if (editClip.movie!=null){
 		editClip.movie.goToBeginning();
+		editClip.timelineValue = 0.0;
 		editClip.movie.speed(f);
 		editClip.movie.play();
 	}
@@ -323,10 +347,8 @@ void Add_Clip(){
 		c.posY = editClip.posY;
 		c.Scale = editClip.Scale;
 		c.fadeInAlpha = editClip.fadeInAlpha;
-		c.fadeInAlphaStep = editClip.fadeInAlphaStep;
 		c.fadeInDuration = editClip.fadeInDuration;
 		c.fadeOutAlpha = editClip.fadeOutAlpha;
-		c.fadeOutAlphaStep = editClip.fadeOutAlphaStep;
 		c.fadeOutDuration = editClip.fadeOutDuration;
 		c.blendMode = editClip.blendMode;
 
@@ -344,7 +366,7 @@ void Add_Clip(){
 
 		println("Clip added to Layer "+addTo);
 		println("layers["+addTo+"].clips.size(): "+layers[addTo].clips.size());
-		layers[addTo].duration += (c.duration*c.nbRepeat)/c.movieSpeed;
+		layers[addTo].duration += c.duration;
 		Layer_Duration[addTo].setText("DURATION: "+layers[addTo].duration);
 		
 		// check if layer duration superior to composition duration
@@ -369,28 +391,28 @@ void Update_Clip(){
 		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).posY = editClip.posY;
 		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).Scale = editClip.Scale;
 		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).fadeInAlpha = editClip.fadeInAlpha;
-		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).fadeInAlphaStep = editClip.fadeInAlphaStep;
 		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).fadeInDuration = editClip.fadeInDuration;
 		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).fadeOutAlpha = editClip.fadeOutAlpha;
-		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).fadeOutAlphaStep = editClip.fadeOutAlphaStep;
 		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).fadeOutDuration = editClip.fadeOutDuration;
 		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).blendMode = editClip.blendMode;
 		layers[updateLayerClip[0]].clips.get(updateLayerClip[1]).setVideo();
-		updateLayerClip = new int[]{999,999};
-		Update_ClipId.setText("LAYER_ CLIP_");
 
+		// calcul new LayerDuration
 		float updateLayerDuration=0.0;
 		for(int i=0; i<layers[updateLayerClip[0]].clips.size(); i++){
-			updateLayerDuration+=layers[updateLayerClip[0]].clips.get(i).duration;
+			updateLayerDuration+=layers[updateLayerClip[0]].clips.get(i).duration*layers[updateLayerClip[0]].clips.get(i).nbRepeat/layers[updateLayerClip[0]].clips.get(i).movieSpeed;
 		}
 		layers[updateLayerClip[0]].duration = updateLayerDuration;
 		Layer_Duration[updateLayerClip[0]].setText("DURATION: "+updateLayerDuration);
 
 		// check if layer duration superior to composition duration
-		if(layers[updateLayerClip[0]].duration>composition.duration){
-			composition.duration = layers[addTo].duration;
+		if(updateLayerDuration>composition.duration){
+			composition.duration = updateLayerDuration;
 			Composition_Duration.setText("DURATION: "+composition.duration);
 		}
+
+		updateLayerClip = new int[]{999,999};
+		Update_ClipId.setText("LAYER_ CLIP_");
 		updatingClip=false;
 	}
 }
