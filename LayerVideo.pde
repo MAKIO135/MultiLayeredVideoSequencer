@@ -50,7 +50,7 @@ class LayerVideo{
 			
 			// jump to next clip or end Layer
 			if((clips.get(currentClip)).ended){
-				println("Layer"+id+".currentClip: "+currentClip+" ended");
+				// println("Layer"+id+".currentClip: "+currentClip+" ended");
 				if(isEditLayer){
 					float timelineValueUp=0.0;
 					for (int i = 0; i<= currentClip; i++){

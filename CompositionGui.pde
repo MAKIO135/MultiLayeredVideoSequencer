@@ -63,10 +63,19 @@ void Composition_PlayPause(boolean b){
 	composition.timer = millis();
 }
 
+// quick access 'r' || 'R'
+void Composition_Reset(){
+	composition.isPlaying=false;
+	for (int i = 0; i<nbLayers; i++){
+		layers[i].resetLayer();
+	}
+}
+
 // quick access 's' || 'S'
 void Composition_Save() {
-	println("exporting");
+	println("Saving Composition");
 	JSONObject JSONExport = new JSONObject();
+	
 	for(int i=0;i<nbLayers;i++){
 		JSONObject JSONLayer = new JSONObject();
 		int nbClips = layers[i].clips.size();
@@ -139,17 +148,19 @@ void Composition_Save() {
 	tmp[0]=JSONExport.toString();
 	String timestamp = year() + nf(month(),2) + nf(day(),2) + "-" + nf(hour(),2) + nf(minute(),2) + nf(second(),2);
 	saveStrings("data/Compositions/Composition_"+timestamp+".json",tmp);
-	println("export OK");
+	println("Compostion Saved");
 }
 
 void Composition_Load(){
 	String loadPath = selectInput();// Opens file chooser
 	if (loadPath != null && loadPath.substring(loadPath.length()-4).equals("json")) {
+		println("Loading Composition");
 
 		String[] JSONString = loadStrings(loadPath);
 		JSONObject JSONComposition = new JSONObject();
 		JSONObject JSONLayer = new JSONObject();
 		JSONObject JSONClip = new JSONObject();
+
 		try {
 			JSONComposition = new JSONObject(JSONString[0]);
 			// println(JSONComposition);
@@ -179,6 +190,7 @@ void Composition_Load(){
 				Layer_fadeInDuration[i].setValue(layers[i].fadeInDuration);
 				layers[i].fadeOutAlpha = (float)JSONLayer.getDouble("fadeOutAlpha");
 				Layer_fadeOutAlpha[i].setValue(layers[i].fadeOutAlpha);
+
 				layers[i].fadeOutDuration = (float)JSONLayer.getDouble("fadeOutDuration");
 				Layer_fadeOutDuration[i].setValue(layers[i].fadeOutDuration);
 
@@ -202,6 +214,8 @@ void Composition_Load(){
 					layers[i].clips.get(j).fadeOutAlpha = (float)JSONClip.getDouble("fadeOutAlpha");
 					layers[i].clips.get(j).fadeOutDuration = (float)JSONClip.getDouble("fadeOutDuration");
 					layers[i].clips.get(j).blendMode = JSONClip.getInt("blendMode");
+		
+					currentButton = layers[i].clips.get(j).movieNum;
 					gui.addButton("Layer"+i+"Clip"+j)
 						.setPosition(10+46*j, 75)
 						.setSize(45,45)
@@ -227,14 +241,6 @@ void Composition_Load(){
 	}
 }
 
-// quick access 'r' || 'R'
-void Composition_Reset(){
-	composition.isPlaying=false;
-	for (int i = 0; i<nbLayers; i++){
-		layers[i].resetLayer();
-	}
-}
-
 // a quick loading method for debug :: access by press 'l' || 'L'
 // specify json file path in KeyPressed method
 void loadComp(String loadPath){
@@ -242,6 +248,7 @@ void loadComp(String loadPath){
 	JSONObject JSONComposition = new JSONObject();
 	JSONObject JSONLayer = new JSONObject();
 	JSONObject JSONClip = new JSONObject();
+
 	try {
 		JSONComposition = new JSONObject(JSONString[0]);
 		// println(JSONComposition);
@@ -308,6 +315,7 @@ void loadComp(String loadPath){
 	catch(JSONException e) {
 		e.getCause();
 	}
+
 
 	for(int i=0; i<nbLayers; i++){
 		if(layers[i].duration>composition.duration) composition.duration = layers[i].duration;

@@ -35,7 +35,7 @@ import processing.opengl.*;
 import codeanticode.glgraphics.*;
 import codeanticode.gsvideo.*;
 import controlP5.*;
-import org.json.*;//used for export
+import org.json.*;
 
 //////////////////////////////Clips
 String[] Playlist;
@@ -61,28 +61,36 @@ void setup(){
 	noStroke();
 
 	// load videos and check if you need to load or create thumbnails
+	println("loading videos");
 	loadVideos();
+	println("loading thumbnails");
 	checkThumbnails();
 
 	// create a Clip for edition
+	println("initializing Clip Editor");
 	editClip = new Clip(this);
 	editClip.isEditClip = true;
 
 	// create layers
+	println("initializing Layers Editor");
 	layers = new LayerVideo[nbLayers];
 	for (int i = 0; i<nbLayers; i++){
 		layers[i] = new LayerVideo(this, i);
 	}
 
 	// create composition
+	println("initializing Composition Editor");
 	composition = new Composition(this);
 	initBlendModes();
 	
 	// init GUI
+	println("initializing GUI");
 	gui = new ControlP5(this);
 	initClipGui();
 	initLayerGui();
 	initCompositionGui();
+
+	println("setup complete");
 }
 
 void draw(){
@@ -107,4 +115,13 @@ void keyPressed(){
 	else if(key=='r' || key=='R'){
 		Composition_Reset();
 	}
+	else if(key=='c' || key=='C'){// reset editClip
+		editClip.movie.stop();
+		editClip.tex.delete();
+		editClip.texFiltered.delete();
+		editClip = new Clip(this);
+		editClip.isEditClip = true;
+		initClipGui();	
+	}
+	// could use 0-8 to navigate through Layers
 }

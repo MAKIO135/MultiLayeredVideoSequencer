@@ -75,6 +75,7 @@ void controlEvent(ControlEvent event){
 			String s = event.getController().getName();
 			// println(s);
 
+			// set edit Clip from a Layer Clip
 			if(s.length()>10 && (s.substring(6,10)).equals("Clip")){
 				// get number of the Layer
 				int n = int(s.substring(5,6));

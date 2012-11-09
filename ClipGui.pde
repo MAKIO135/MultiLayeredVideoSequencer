@@ -214,7 +214,7 @@ void initClipGui() {
 			.setPosition(10,290)
 			.setSize(185,10)
 			.setMin(0.0)
-			.setMax(5.0)
+			.setMax(20.0)
 			.setValue(0.0)
 			.moveTo(clipGui)
 			;
@@ -234,7 +234,7 @@ void initClipGui() {
 			.setPosition(10,380)
 			.setSize(185,10)
 			.setMin(0.0)
-			.setMax(5.0)
+			.setMax(20.0)
 			.setValue(0.0)
 			.moveTo(clipGui)
 			;
@@ -356,6 +356,7 @@ void Add_Clip(){
 
 		layers[addTo].clips.add(c);
 
+		currentButton = c.movieNum;
 		gui.addButton("Layer"+addTo+"Clip"+(layers[addTo].clips.size()-1))
 			.setPosition(10+46*(layers[addTo].clips.size()-1), 75)
 			.setSize(45,45)

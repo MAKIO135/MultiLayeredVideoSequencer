@@ -1,6 +1,6 @@
 void loadVideos(){
 	// Path
-	String path = sketchPath+"\\data\\videos\\";
+	String path = sketchPath+"/data/videos/";
 	Playlist = listFileNames(path);
 	// println(Playlist);
 	saveStrings("data/playlist.txt", Playlist);

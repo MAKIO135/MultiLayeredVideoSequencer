@@ -1,4 +1,5 @@
 PImage[] thumbnails;
+
 void checkThumbnails(){
 	loadThumbnails();
 	String[] thumbs=loadStrings("data/thumbnails.txt");
@@ -24,7 +25,7 @@ void checkThumbnails(){
 
 void loadThumbnails(){
 	// Path
-	String path = sketchPath+"\\data\\thumbnails\\";
+	String path = sketchPath+"/data/thumbnails/";
 
 	// println("Listing all filenames in "+path);
 	String[] filenames = listFileNames(path);
