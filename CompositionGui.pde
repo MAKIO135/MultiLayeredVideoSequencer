@@ -301,6 +301,8 @@ void loadComp(String loadPath){
 				layers[i].clips.get(j).fadeOutAlpha = (float)JSONClip.getDouble("fadeOutAlpha");
 				layers[i].clips.get(j).fadeOutDuration = (float)JSONClip.getDouble("fadeOutDuration");
 				layers[i].clips.get(j).blendMode = JSONClip.getInt("blendMode");
+
+				currentButton = layers[i].clips.get(j).movieNum;
 				gui.addButton("Layer"+i+"Clip"+j)
 					.setPosition(10+46*j, 75)
 					.setSize(45,45)

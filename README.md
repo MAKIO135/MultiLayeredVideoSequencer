@@ -34,20 +34,7 @@ Made with:<br>
 	- custom fade in and fade out<br>
 	- choice of VideoLayer to add the clip to</ul>
 </li>
-
-<h3>Needing reviews:</h3>
-<li>
-	<ul>- Some videos are freezing randomly whitout error message: codecs? GLGraphics, GSVideo or GStreamer ??<br>
-	- ControlP5 Timeline not updating correctly with some videos: codecs? GLGraphics, GSVideo or GStreamer ??<br></ul>
-</li>
-
-<h3>GStreamer issue</h3>
-<p>
-	<b>** (java.exe:6352): WARNING **: gstvideo: failed to get framerate property of pad playsink0:audio_raw_sink<br>
-	(java.exe:6352): GStreamer-CRITICAL **: gst_value_get_fraction_numerator: assertion `GST_VALUE_HOLDS_FRACTION (value)' failed</b><br>
-	Happens when using movie.frame() continuously.<br>
-	Depends on videos and have them restart.
-</p><br>
+<br>
 <br>
 
 
