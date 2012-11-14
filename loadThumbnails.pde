@@ -9,7 +9,7 @@ void checkThumbnails(){
 			println("creating thumbnails");
 			GSMovie tmp=new GSMovie(this,"videos/"+Playlist[i]);
 			tmp.play();
-			while(tmp.width<10){
+			while(tmp.width<10){//waiting while video not completely loaded
 			}
 			tmp.jump(tmp.duration()/2);
 			tmp.pause();

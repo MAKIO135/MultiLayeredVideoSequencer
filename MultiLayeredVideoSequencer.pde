@@ -106,8 +106,7 @@ void movieEvent(GSMovie movie) {
 
 void keyPressed(){
 	if(key=='l' || key=='L'){
-		loadComp("data/Compositions/Composition_20121109-022621.json");
-		// Composition_Load();
+		Composition_ReloadLast();
 	}
 	else if(key=='s' || key=='S'){
 		Composition_Save();
@@ -116,12 +115,12 @@ void keyPressed(){
 		Composition_Reset();
 	}
 	else if(key=='c' || key=='C'){// reset editClip
-		editClip.movie.stop();
-		editClip.tex.delete();
-		editClip.texFiltered.delete();
-		editClip = new Clip(this);
-		editClip.isEditClip = true;
-		initClipGui();	
+		resetEditClip();
 	}
 	// could use 0-8 to navigate through Layers
+}
+
+void stop(){
+	Composition_Reset();
+	resetEditClip();
 }

@@ -1,3 +1,8 @@
+/*
+Missing features:
+ControlP5.Ranges could be added to composition GUI to show position of layers
+*/
+
 Slider Composition_Timeline;
 Textlabel Composition_Duration;
 Button Composition_Save;
@@ -61,14 +66,6 @@ void Composition_PlayPause(boolean b){
 		layers[i].isPlaying=false;
 	}
 	composition.timer = millis();
-}
-
-// quick access 'r' || 'R'
-void Composition_Reset(){
-	composition.isPlaying=false;
-	for (int i = 0; i<nbLayers; i++){
-		layers[i].resetLayer();
-	}
 }
 
 // quick access 's' || 'S'
@@ -190,7 +187,6 @@ void Composition_Load(){
 				Layer_fadeInDuration[i].setValue(layers[i].fadeInDuration);
 				layers[i].fadeOutAlpha = (float)JSONLayer.getDouble("fadeOutAlpha");
 				Layer_fadeOutAlpha[i].setValue(layers[i].fadeOutAlpha);
-
 				layers[i].fadeOutDuration = (float)JSONLayer.getDouble("fadeOutDuration");
 				Layer_fadeOutDuration[i].setValue(layers[i].fadeOutDuration);
 
@@ -241,10 +237,18 @@ void Composition_Load(){
 	}
 }
 
-// a quick loading method for debug :: access by press 'l' || 'L'
-// specify json file path in KeyPressed method
-void loadComp(String loadPath){
-	String[] JSONString = loadStrings(loadPath);
+// quick access 'r' || 'R'
+void Composition_Reset(){
+	composition.isPlaying=false;
+	for (int i = 0; i<nbLayers; i++){
+		layers[i].resetLayer();
+	}
+}
+
+// a quick loading method :: access by press 'l' || 'L'
+void Composition_ReloadLast(){
+	String[] compositions =  listFileNames(sketchPath+"/data/Compositions/");
+	String[] JSONString = loadStrings("/data/Compositions/"+compositions[compositions.length-1]);
 	JSONObject JSONComposition = new JSONObject();
 	JSONObject JSONLayer = new JSONObject();
 	JSONObject JSONClip = new JSONObject();

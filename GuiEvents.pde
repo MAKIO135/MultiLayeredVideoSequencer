@@ -3,25 +3,25 @@ void controlEvent(ControlEvent event){
 		// println(event.getGroup().getName()+" is Group");
 
 		/////////////////////////////////////////////////Clip Events
-		if((event.getGroup().getName()).equals("clipList")){
+		if(event.isFrom("clipList")){
 			if(!event.getGroup().isOpen()){
 				fill(20);
 				rect(0,0,500,300);
 			}
 		}
 	
-		else if((event.getGroup().getName()).equals("Clip_LectureMode")){
+		else if(event.isFrom("Clip_LectureMode")){
 			editClip.lectureMode = (int)event.getGroup().getValue();
 			if(editClip.lectureMode == 0 && editClip.movie != null) editClip.movie.loop();
 			// println("editClip.lectureMode: "+editClip.lectureMode);
 		}
 	
-		else if((event.getGroup().getName()).equals("Clip_Effect")){
+		else if(event.isFrom("Clip_Effect")){
 			editClip.blendMode = (int)event.getGroup().getValue();
 			// println("editClip.blendMode: "+editClip.blendMode);
 		}
 	
-		else if((event.getGroup().getName()).equals("Add_to_Layer")){
+		else if(event.isFrom("Add_to_Layer")){
 			addTo = (int)event.getGroup().getValue();
 			// println("editClip.blendMode: "+editClip.blendMode);
 		}
@@ -48,7 +48,7 @@ void controlEvent(ControlEvent event){
 		// println(event.getController().getName()+" is Controller");
 
 		/////////////////////////////////////////////////Clips Events
-		if((event.getController().getName()).equals("Clip_XY")){
+		if(event.isFrom("Clip_XY")){
 			if(editClip != null){
 				editClip.posX = map(event.getController().arrayValue()[0],-100,100,-1,1);
 				editClip.posY = map(event.getController().arrayValue()[1],-100,100,-1,1);

@@ -417,3 +417,12 @@ void Update_Clip(){
 		updatingClip=false;
 	}
 }
+
+void resetEditClip(){
+	editClip.movie.stop();
+	editClip.tex.delete();
+	editClip.texFiltered.delete();
+	editClip = new Clip(this);
+	editClip.isEditClip = true;
+	initClipGui();
+}
